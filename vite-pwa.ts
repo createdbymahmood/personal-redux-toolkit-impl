@@ -10,15 +10,15 @@ export const vitePWAConfig: Partial<VitePWAOptions> = {
         theme_color: "#ffffff",
         icons: [
             {
-                src: "favicon.ico", // <== don't add slash, for testing
+                src: "vite.svg", // <== don't add slash, for testing
                 sizes: "192x192",
             },
             {
-                src: "/favicon.ico", // <== don't remove slash, for testing
+                src: "/vite.svg", // <== don't remove slash, for testing
                 sizes: "512x512",
             },
             {
-                src: "favicon.ico", // <== don't add slash, for testing
+                src: "vite.svg", // <== don't add slash, for testing
                 sizes: "512x512",
 
                 purpose: "any maskable",
