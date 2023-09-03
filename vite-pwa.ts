@@ -31,8 +31,7 @@ export const vitePWAConfig: Partial<VitePWAOptions> = {
         type: "module",
         navigateFallback: "index.html",
     },
+    srcDir: "src",
+    filename: "prompt-sw.ts",
+    strategies: "injectManifest",
 };
-
-vitePWAConfig.srcDir = "src";
-vitePWAConfig.filename = "prompt-sw.ts";
-vitePWAConfig.strategies = "injectManifest";

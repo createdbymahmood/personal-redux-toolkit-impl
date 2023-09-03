@@ -4,5 +4,5 @@ import { useUpdate, createBreakpoint, createMemo } from "react-use";
 console.log({ Mui, useUpdate, createBreakpoint, createMemo });
 
 export default function App() {
-    return <div>reload 1 </div>;
+    return <div>Delivering some updates </div>;
 }
