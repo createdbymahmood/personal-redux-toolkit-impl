@@ -1,9 +1,6 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-
 import { includes } from "lodash-es";
-import { vitePWAConfig } from "./vite-pwa";
-import { VitePWA } from "vite-plugin-pwa";
 
 const getManualChunks = (id: string) => {
     if (!includes(id, "node_modules")) return;
@@ -11,7 +8,7 @@ const getManualChunks = (id: string) => {
 };
 
 export default defineConfig({
-    plugins: [react(), VitePWA(vitePWAConfig)],
+    plugins: [react()],
     build: {
         rollupOptions: {
             output: {
