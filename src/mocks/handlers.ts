@@ -44,15 +44,15 @@ export const handlers = [
     );
   }),
 
-  rest.post("/login", (req, res, ctx) => {
-    return res.once(ctx.json({ message: "i fail once" }), ctx.status(500));
-  }),
+  // rest.post("/login", (req, res, ctx) => {
+  //   return res.once(ctx.json({ message: "i fail once" }), ctx.status(500));
+  // }),
   rest.post("/login", (req, res, ctx) => {
     return res(ctx.json({ token, user }));
   }),
 
-  rest.get("/me", (req, res, ctx) => {
-    return res(ctx.status(401), ctx.json({ error: "Salam" }));
+  rest.post("/logout", (req, res, ctx) => {
+    return res(ctx.json({ token, user }), ctx.delay(2000));
   }),
 
   rest.get("/me", (req, res, ctx) => {

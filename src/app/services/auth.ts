@@ -1,5 +1,6 @@
 import { retry } from "@reduxjs/toolkit/query/react";
 import { api } from "./api";
+import { toast } from "sonner";
 
 export interface Post {
   id: number;
@@ -36,6 +37,34 @@ export const authApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+
+    refreshToken: build.query<{ user: User; token: string }, void>({
+      query: () => ({
+        url: "refreshToken",
+        method: "POST",
+      }),
+    }),
+    logout: build.mutation<{ terminateSession: boolean }, void>({
+      query: () => ({
+        url: "logout",
+        method: "POST",
+      }),
+    }),
+    getPokemonByName: build.query({
+      query: page => `pokemon?offset=${page * 20}&limit=20`,
+      // Only have one cache entry because the arg always maps to one string
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+      // Always merge incoming data to the cache entry
+      merge: (currentCache, newItems) => {
+        currentCache.results.push(...newItems.results);
+      },
+      // Refetch when the page arg changes
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
+    }),
   }),
 });
 
@@ -43,4 +72,8 @@ export const {
   useLoginMutation,
   useRefetchSessionQuery,
   useLazyRefetchSessionQuery,
+  useGetPokemonByNameQuery,
+  useLogoutMutation,
 } = authApi;
+
+export const { refreshToken } = authApi.endpoints;

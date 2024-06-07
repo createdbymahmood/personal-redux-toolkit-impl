@@ -8,9 +8,8 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 import { Mutex } from "async-mutex";
-import { auth } from "../../features/auth/auth-slice";
-import { toast } from "sonner";
-import { useNetwork } from "ahooks";
+import { authActions } from "../../features/auth/auth-slice";
+import { authApi } from "./auth";
 
 // Create our baseQuery instance
 const baseQuery = fetchBaseQuery({
@@ -18,6 +17,7 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     // By default, if we have a token in the store, let's use that for authenticated requests
     const token = (getState() as RootState).auth.token;
+    headers.set("Accept", "application/json");
     if (token) {
       headers.set("authentication", `Bearer ${token}`);
     }
@@ -25,7 +25,6 @@ const baseQuery = fetchBaseQuery({
   },
 });
 const mutex = new Mutex();
-type PromiseT<Data = any> = Promise<Data> | (() => Promise<Data>);
 
 const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,
@@ -35,30 +34,26 @@ const baseQueryWithReauth: BaseQueryFn<
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock();
   let result = await baseQuery(args, api, extraOptions);
+
   if (result.error && result.error.status === 401) {
     // checking whether the mutex is locked
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
-      const promise = baseQuery("/refreshToken", api, extraOptions);
+
       try {
-        toast.promise(promise as PromiseT<{ data: unknown }>, {
-          loading: "Refreshing user...",
-          success: refreshResult => {
-            console.log(refreshResult);
-            if (refreshResult.data) {
-              api.dispatch(auth.tokenReceived(refreshResult.data));
-              // retry the initial query
-              (async () => {
-                result = await baseQuery(args, api, extraOptions);
-              })();
-              return `Success`;
-            } else {
-              api.dispatch(auth.logout());
-              throw new Error();
-            }
-          },
-          error: `Something went wrong`,
-        });
+        const refreshResult = await baseQuery(
+          "/refreshToken",
+          api,
+          extraOptions
+        );
+        if (refreshResult.data) {
+          api.dispatch(authActions.tokenReceived(refreshResult.data));
+          // retry the initial query
+          result = await baseQuery(args, api, extraOptions);
+        } else {
+          // api.dispatch(auth.logout());
+          authApi.endpoints.logout.initiate();
+        }
       } finally {
         // release must be called once the mutex should be released again.
         release();
@@ -104,10 +99,4 @@ export const api = createApi({
    * If you want all endpoints defined in the same file, they could be included here instead
    */
   endpoints: () => ({}),
-});
-
-export const enhancedApi = api.enhanceEndpoints({
-  endpoints: () => ({
-    getPost: () => "test",
-  }),
 });

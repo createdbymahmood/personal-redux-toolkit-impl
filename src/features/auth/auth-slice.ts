@@ -9,7 +9,7 @@ const initialState = {
   user: null,
   token: null,
   isAuthenticated: false,
-  isInitialized: false,
+  isInitialized: true,
 } as {
   user: null | User;
   token: string | null;
@@ -17,7 +17,6 @@ const initialState = {
   isInitialized: boolean;
 };
 
-const logout = createAction<void>("logout");
 const tokenReceived = createAction<{}>("token-received");
 
 const slice = createSlice({
@@ -27,15 +26,9 @@ const slice = createSlice({
     logout: () => initialState,
   },
   extraReducers: builder => {
-    builder
-      .addCase(logout, (state, action) => {
-        // action is inferred correctly here if using TS
-        console.log("logout", initialState);
-        assign(state, initialState);
-      })
-      .addCase(tokenReceived, (state, action) => {
-        state.user = user;
-      });
+    builder.addCase(tokenReceived, (state, action) => {
+      state.user = user;
+    });
 
     /* LOGIN  */
     builder
@@ -79,12 +72,16 @@ const slice = createSlice({
           console.log("rejected", action);
           state.isInitialized = true;
         }
-      );
+      )
+      .addMatcher(authApi.endpoints.logout.matchFulfilled, (state, action) => {
+        console.log("logout", action);
+        assign(state, initialState);
+      });
   },
 });
 
 export default slice.reducer;
-export const auth = { ...slice.actions, logout, tokenReceived };
+export const authActions = { ...slice.actions, tokenReceived };
 
 export const selectIsAuthenticated = (state: RootState) =>
   state.auth.isAuthenticated;
