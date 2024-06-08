@@ -1,5 +1,5 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Drawer, Layout, Menu, Typography, theme } from "antd";
+import { Button, Card, Drawer, Layout, Menu, Typography, theme } from "antd";
 import React, { useState } from "react";
 const { Header, Sider, Content } = Layout;
 
@@ -91,6 +91,7 @@ import type { RadioChangeEvent } from "antd";
 import { Radio, Tabs } from "antd";
 import { useResponsiveValue } from "./components/l";
 import { X } from "./components/x";
+import { Slider } from "./components/ui/slider";
 
 type TabPosition = "left" | "right" | "top" | "bottom";
 
@@ -130,7 +131,14 @@ const TabsDemo: React.FC = () => {
 };
 const App: React.FC = () => {
   const {
-    token: { colorBgContainer, borderRadiusLG, paddingMD, marginMD },
+    token: {
+      colorBgContainer,
+      borderRadiusLG,
+      paddingMD,
+      marginMD,
+      paddingLG,
+      paddingXL,
+    },
     theme: t,
   } = theme.useToken();
 
@@ -159,7 +167,13 @@ const App: React.FC = () => {
       );
     return (
       <Sider trigger={null} collapsible collapsed={collapsed} width={256}>
-        <Header style={{ padding: paddingMD, background: colorBgContainer }}>
+        <Header
+          style={{
+            padding: paddingMD,
+            paddingInline: paddingLG,
+            background: colorBgContainer,
+          }}
+        >
           <Typography>سلام</Typography>
         </Header>
         <MenuDemo />
@@ -196,7 +210,16 @@ const App: React.FC = () => {
         >
           {/* <TabsDemo /> */}
 
-          <X />
+          <Card>
+            <Slider
+              range
+              defaultValue={[10, 20]}
+              max={40}
+              onChange={v => {
+                console.log(v);
+              }}
+            />
+          </Card>
         </Content>
       </Layout>
     </Layout>

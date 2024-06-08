@@ -1,16 +1,19 @@
 import { Slider as OriginalSlider } from "antd";
 import { createStyles } from "antd-style";
-import * as React from "react";
-import type { SliderRef } from "rc-slider/lib/Slider";
+import { SliderBaseProps } from "antd/es/slider";
+import { ComponentTokenMap } from "antd/es/theme/interface";
 import { SliderSingleProps } from "antd/lib";
+import { SliderRangeProps } from "antd/lib/slider";
 import merge from "deepmerge";
+import type { SliderRef } from "rc-slider/lib/Slider";
+import * as React from "react";
+import { PartialDeep } from "type-fest";
 
 const useSliderStyles = createStyles(
   ({ prefixCls, responsive, css, token }) => {
     return {
       tooltip: css`
         .${prefixCls}-tooltip-inner, .${prefixCls}-tooltip-arrow:after {
-          box-shadow: none;
           background-color: ${token.blue};
 
           ${responsive.xs} {
@@ -26,22 +29,37 @@ const useSliderStyles = createStyles(
           }
         }
       `,
-    };
-  }
-);
+      t: {
+        padding: token.paddingSM,
+        background: token.red,
 
-export const Slider = React.forwardRef<SliderRef, SliderSingleProps>(
-  (props, ref) => {
-    const slider = useSliderStyles();
-
-    const defaultProps: SliderSingleProps = {
-      tooltip: {
-        rootClassName: slider.styles.tooltip,
-        open: false,
+        [`${responsive.xs}`]: {
+          background: token.blue,
+        },
       },
     };
-    const mergedProps = merge(defaultProps, props);
-    return <OriginalSlider ref={ref} {...mergedProps} />;
   }
 );
+
+export const Slider = React.forwardRef<
+  SliderRef,
+  SliderSingleProps | SliderRangeProps
+>((props, ref) => {
+  const slider = useSliderStyles();
+
+  const defaultProps: SliderBaseProps = {
+    tooltip: {
+      rootClassName: slider.styles.tooltip,
+      open: false,
+    },
+  };
+
+  const mergedProps = merge(defaultProps, props);
+
+  return <OriginalSlider ref={ref} {...mergedProps} />;
+});
+
 Slider.displayName = "Slider";
+
+export const SliderComopnentToken: PartialDeep<ComponentTokenMap["Slider"]> =
+  {};
