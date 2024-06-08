@@ -1,4 +1,5 @@
 import { Grid } from "antd";
+import { useResponsive } from "antd-style";
 import { Breakpoint } from "antd/lib";
 import { CSSProperties } from "react";
 
@@ -9,7 +10,7 @@ type UseCStylesProps<T> = {
 
 // Utility function to handle the breakpoints
 export const useResponsiveValue = <T>(values: UseCStylesProps<T>): T => {
-  const breakpoints = Grid.useBreakpoint();
+  const breakpoints = useResponsive();
 
   const orderedBreakpoints: Breakpoint[] = [
     "xxl",

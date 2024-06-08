@@ -21,7 +21,9 @@ const G = () => {
             locale={fa_IR}
             direction="rtl"
             theme={{
-              token: {},
+              token: {
+                fontFamily: "IRANYekan, font-serif",
+              },
               components: {
                 Layout: {
                   siderBg: "#fff",

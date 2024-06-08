@@ -33,7 +33,7 @@ const useSliderStyles = createStyles(
         padding: token.paddingSM,
         background: token.red,
 
-        [`${responsive.xs}`]: {
+        [responsive.xs]: {
           background: token.blue,
         },
       },
@@ -55,7 +55,6 @@ export const Slider = React.forwardRef<
   };
 
   const mergedProps = merge(defaultProps, props);
-
   return <OriginalSlider ref={ref} {...mergedProps} />;
 });
 
