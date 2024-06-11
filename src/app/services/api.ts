@@ -1,4 +1,5 @@
 import {
+  BaseQueryApi,
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
@@ -10,20 +11,28 @@ import { RootState } from "../store";
 import { Mutex } from "async-mutex";
 import { authActions } from "../../features/auth/auth-slice";
 import { authApi } from "./auth";
+import { MaybePromise } from "msw/lib/types/response";
 
-// Create our baseQuery instance
+const prepareHeaders = (
+  headers: Headers,
+  {
+    getState,
+  }: Pick<BaseQueryApi, "getState" | "extra" | "endpoint" | "type" | "forced">
+): MaybePromise<void | Headers> => {
+  // By default, if we have a token in the store, let's use that for authenticated requests
+  const token = (getState() as RootState).auth.token;
+  headers.set("Accept", "application/json");
+  if (token) {
+    headers.set("authentication", `Bearer ${token}`);
+  }
+  return headers;
+};
+
 const baseQuery = fetchBaseQuery({
   baseUrl: "/",
-  prepareHeaders: (headers, { getState }) => {
-    // By default, if we have a token in the store, let's use that for authenticated requests
-    const token = (getState() as RootState).auth.token;
-    headers.set("Accept", "application/json");
-    if (token) {
-      headers.set("authentication", `Bearer ${token}`);
-    }
-    return headers;
-  },
+  prepareHeaders,
 });
+
 const mutex = new Mutex();
 
 const baseQueryWithReauth: BaseQueryFn<
@@ -34,12 +43,12 @@ const baseQueryWithReauth: BaseQueryFn<
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock();
   let result = await baseQuery(args, api, extraOptions);
+  console.log("Salam");
 
   if (result.error && result.error.status === 401) {
     // checking whether the mutex is locked
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
-
       try {
         const refreshResult = await baseQuery(
           "/refreshToken",

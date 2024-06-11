@@ -1,3 +1,5 @@
+import { RootState } from "../app/store";
+
 export function providesList<
   R extends { id: string | number }[],
   T extends string
@@ -9,3 +11,11 @@ export function providesList<
       ]
     : [{ type: tagType, id: "LIST" }];
 }
+
+/* eslint-disable import/prefer-default-export */
+
+export const makeSubSelector =
+  <ReducerState>(rootSelector: (state: RootState) => ReducerState) =>
+  <Key extends keyof ReducerState>(key: Key) =>
+  (state: RootState) =>
+    rootSelector(state)[key];

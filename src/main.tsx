@@ -6,11 +6,11 @@ import { Provider } from "react-redux";
 import { worker } from "./mocks/browser.ts";
 import { PersistGate } from "redux-persist/integration/react";
 import { Toaster } from "sonner";
-import { ConfigProvider } from "antd";
+
 import "./global.css";
 import "./assets/fonts/iran-yekan/stylesheet.css";
-import fa_IR from "antd/lib/locale/fa_IR";
 import { SliderComopnentToken } from "./components/ui/slider.tsx";
+import { ConfigProvider } from "antd";
 
 const G = () => {
   return (
@@ -18,8 +18,7 @@ const G = () => {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <ConfigProvider
-            locale={fa_IR}
-            direction="rtl"
+            componentSize="middle"
             theme={{
               token: {
                 fontFamily: "IRANYekan, font-serif",

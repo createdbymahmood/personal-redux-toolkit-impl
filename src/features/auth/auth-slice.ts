@@ -5,16 +5,20 @@ import type { RootState } from "../../app/store";
 import { assign } from "lodash-es";
 import { user } from "../../mocks/handlers";
 
-const initialState = {
-  user: null,
-  token: null,
-  isAuthenticated: false,
-  isInitialized: true,
-} as {
+export type AuthState = {
   user: null | User;
   token: string | null;
   isAuthenticated: boolean;
   isInitialized: boolean;
+};
+
+export type AuthSlice = typeof slice;
+
+const initialState: AuthState = {
+  user: null,
+  token: null,
+  isAuthenticated: false,
+  isInitialized: true,
 };
 
 const tokenReceived = createAction<{}>("token-received");

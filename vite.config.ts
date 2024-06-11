@@ -1,19 +1,29 @@
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { includes } from "lodash-es";
+import { includes, some, startsWith } from "lodash-es";
+import { defineConfig } from "vite";
+import viteCompression from "vite-plugin-compression";
+
+const vendors = ["react", "react-dom"];
 
 const getManualChunks = (id: string) => {
-    if (!includes(id, "node_modules")) return;
-    return id.toString().split("node_modules/")[1].split("/")[0].toString();
+  if (!id.includes("node_modules")) return;
+  // const isVendor = some(vendors, vendor => includes(id, vendor));
+  // if (isVendor) return "vendors";
+  return id.toString().split("node_modules/")[1].split("/")[0].toString();
 };
 
-export default defineConfig({
-    plugins: [react()],
-    build: {
-        rollupOptions: {
-            output: {
-                manualChunks: getManualChunks,
-            },
-        },
+const viteConfig = defineConfig({
+  plugins: [react(), viteCompression()],
+  server: {
+    port: 9900,
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: getManualChunks,
+      },
     },
+  },
 });
+
+export default viteConfig;

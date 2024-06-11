@@ -1,6 +1,5 @@
 import { retry } from "@reduxjs/toolkit/query/react";
 import { api } from "./api";
-import { toast } from "sonner";
 
 export interface Post {
   id: number;
@@ -40,7 +39,7 @@ export const authApi = api.injectEndpoints({
 
     refreshToken: build.query<{ user: User; token: string }, void>({
       query: () => ({
-        url: "refreshToken",
+        url: "refreshToken/value",
         method: "POST",
       }),
     }),
@@ -75,5 +74,3 @@ export const {
   useGetPokemonByNameQuery,
   useLogoutMutation,
 } = authApi;
-
-export const { refreshToken } = authApi.endpoints;
