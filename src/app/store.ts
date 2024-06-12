@@ -2,7 +2,7 @@ import { Middleware, combineReducers, configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import authReducer from "../features/auth/auth-slice";
+import authReducer from "../features/auth/authSlice";
 import { api } from "./services/api";
 import { listenerMiddleware } from "./listenerMiddleware";
 

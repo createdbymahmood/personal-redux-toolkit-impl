@@ -1,6 +1,6 @@
 import { RootState } from "../../app/store";
 import { makeSubSelector } from "../../lib/redux";
-import { AuthState } from "./auth-slice";
+import { AuthState } from "./authSlice";
 
 export const getMap = (state: RootState) => state.auth;
 const makeMapStateSelector = makeSubSelector<AuthState>(getMap);
