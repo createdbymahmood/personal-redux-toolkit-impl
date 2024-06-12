@@ -21,7 +21,7 @@ const viteConfig = defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: getManualChunks,
+        // manualChunks: getManualChunks,
       },
     },
   },

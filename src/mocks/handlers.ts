@@ -56,7 +56,7 @@ export const handlers = [
   }),
 
   rest.get("/me", (req, res, ctx) => {
-    return res(ctx.json({ token, user }), ctx.delay(1000));
+    return res(ctx.json({ token, user }), ctx.delay(4000));
   }),
 
   // rest.get("/refreshToken", (req, res, ctx) => {
@@ -67,6 +67,6 @@ export const handlers = [
   //   );
   // }),
   rest.get("/refreshToken", (req, res, ctx) => {
-    return res(ctx.json({ token, user }), ctx.delay(1000));
+    return res(ctx.json({ token, user }), ctx.delay(4000));
   }),
 ];
