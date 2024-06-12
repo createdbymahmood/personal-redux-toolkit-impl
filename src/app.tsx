@@ -1,19 +1,14 @@
-import { useLoginMutation } from "./app/services/auth";
-import { useTypedSelector } from "./app/store";
-import { authSelectors } from "./features/auth/selectors";
+import { createRouter } from "@tanstack/react-router";
 
-export default function App() {
-  const [login] = useLoginMutation();
+// Import the generated route tree
+import { routeTree } from "./routeTree.gen";
 
-  const [user, isAuthenticated] = useTypedSelector(state => [
-    authSelectors.getUser(state),
-    authSelectors.getIsAuthenticated(state),
-  ]);
+// Create a new router instance
+export const router = createRouter({ routeTree });
 
-  return (
-    <div>
-      <pre>{JSON.stringify({ user, isAuthenticated }, null, 2)}</pre>
-      <button onClick={login}>login</button>
-    </div>
-  );
+// Register the router instance for type safety
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
 }

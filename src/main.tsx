@@ -1,16 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./app";
-import { persistor, store } from "./app/store.ts";
 import { Provider } from "react-redux";
-import { worker } from "./mocks/browser.ts";
 import { PersistGate } from "redux-persist/integration/react";
-import { Toaster } from "sonner";
+import { router } from "./app";
+import { persistor, store } from "./app/store.ts";
+import { worker } from "./mocks/browser.ts";
 
-import "./global.css";
+import { RouterProvider } from "@tanstack/react-router";
+import { ConfigProvider } from "antd";
 import "./assets/fonts/iran-yekan/stylesheet.css";
 import { SliderComopnentToken } from "./components/ui/slider.tsx";
-import { ConfigProvider } from "antd";
+import "./global.css";
 
 const G = () => {
   return (
@@ -31,8 +31,7 @@ const G = () => {
               },
             }}
           >
-            <App />
-            <Toaster />
+            <RouterProvider router={router} />
           </ConfigProvider>
         </PersistGate>
       </Provider>
