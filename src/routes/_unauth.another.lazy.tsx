@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { authApi } from "../app/services/auth";
-import { Button } from "antd";
-import { Slider } from "../components/ui";
+import { Slider } from "../components/ui/slider";
 
-export const Route = createFileRoute("/another")({
+export const Route = createFileRoute("/_unauth/another")({
   component: () => (
     <div>
       <Slider />

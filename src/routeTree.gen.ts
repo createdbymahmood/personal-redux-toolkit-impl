@@ -13,22 +13,42 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as UnauthImport } from './routes/_unauth'
+import { Route as AuthImport } from './routes/_auth'
 import { Route as IndexImport } from './routes/index'
+import { Route as AuthDashboardIndexImport } from './routes/_auth.dashboard.index'
 
 // Create Virtual Routes
 
-const AnotherLazyImport = createFileRoute('/another')()
+const UnauthAnotherLazyImport = createFileRoute('/_unauth/another')()
 
 // Create/Update Routes
 
-const AnotherLazyRoute = AnotherLazyImport.update({
-  path: '/another',
+const UnauthRoute = UnauthImport.update({
+  id: '/_unauth',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/another.lazy').then((d) => d.Route))
+} as any)
+
+const AuthRoute = AuthImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const UnauthAnotherLazyRoute = UnauthAnotherLazyImport.update({
+  path: '/another',
+  getParentRoute: () => UnauthRoute,
+} as any).lazy(() =>
+  import('./routes/_unauth.another.lazy').then((d) => d.Route),
+)
+
+const AuthDashboardIndexRoute = AuthDashboardIndexImport.update({
+  path: '/dashboard/',
+  getParentRoute: () => AuthRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -42,18 +62,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/another': {
-      id: '/another'
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/_unauth': {
+      id: '/_unauth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof UnauthImport
+      parentRoute: typeof rootRoute
+    }
+    '/_unauth/another': {
+      id: '/_unauth/another'
       path: '/another'
       fullPath: '/another'
-      preLoaderRoute: typeof AnotherLazyImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof UnauthAnotherLazyImport
+      parentRoute: typeof UnauthImport
+    }
+    '/_auth/dashboard/': {
+      id: '/_auth/dashboard/'
+      path: '/dashboard/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AuthDashboardIndexImport
+      parentRoute: typeof AuthImport
     }
   }
 }
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({ IndexRoute, AnotherLazyRoute })
+export const routeTree = rootRoute.addChildren({
+  IndexRoute,
+  AuthRoute: AuthRoute.addChildren({ AuthDashboardIndexRoute }),
+  UnauthRoute: UnauthRoute.addChildren({ UnauthAnotherLazyRoute }),
+})
 
 /* prettier-ignore-end */
