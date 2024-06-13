@@ -1,5 +1,6 @@
 import { retry } from "@reduxjs/toolkit/query/react";
 import { api } from "./api";
+import { store } from "../store";
 
 export interface Post {
   id: number;
@@ -66,6 +67,18 @@ export const authApi = api.injectEndpoints({
     }),
   }),
 });
+
+const sleep = (ms: number) =>
+  new Promise<void>(resolve => setTimeout(() => resolve(), ms));
+
+export const prefetchAuth = {
+  session: async () => {
+    await sleep(2000);
+    return store
+      .dispatch(authApi.endpoints.refetchSession.initiate(undefined))
+      .unwrap();
+  },
+};
 
 export const {
   useLoginMutation,

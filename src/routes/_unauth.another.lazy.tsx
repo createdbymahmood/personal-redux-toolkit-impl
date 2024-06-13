@@ -1,14 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { authApi } from "../app/services/auth";
-import { Slider } from "../components/ui/slider";
+import { prefetchAuth } from "../app/services/auth";
 
 export const Route = createFileRoute("/_unauth/another")({
-  component: () => (
-    <div>
-      <Slider />
-    </div>
-  ),
-  loader: ({ context }) =>
-    context.dispatch(authApi.endpoints.refetchSession.initiate(undefined)),
-  pendingComponent: () => "pending...",
+  component: Another,
+  loader: prefetchAuth.session,
 });
+
+function Another() {
+  const query = Route.useLoaderData();
+  return <pre>{JSON.stringify(query, null, 2)}</pre>;
+}
