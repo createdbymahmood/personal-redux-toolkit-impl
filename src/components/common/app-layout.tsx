@@ -10,9 +10,12 @@ import {
 } from "@ant-design/icons";
 import {
   Link,
+  Outlet,
   ReactNode,
   useLocation,
+  useNavigate,
   useParams,
+  useRouter,
   useRouterState,
 } from "@tanstack/react-router";
 import type { MenuProps } from "antd";
@@ -20,6 +23,7 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { useMount, useUnmount, useUpdateEffect } from "ahooks";
 import { get, noop } from "lodash-es";
+import { useLogoutMutation } from "../../app/services/auth";
 type MenuItem = Required<MenuProps>["items"][number];
 
 function findKeyAndParent(
@@ -56,7 +60,15 @@ const sidebarMenuItems: MenuItem[] = [
     children: [
       {
         key: "/dashboard",
-        label: <Link to="/dashboard/">Another Page</Link>,
+        label: (
+          <Link
+            to="/$lang/dashboard/"
+            params={{ lang: "en" }}
+            search={{ categories: ["Category"], enabled: true, pageIndex: 2 }}
+          >
+            Dashboard
+          </Link>
+        ),
       },
     ],
   },
@@ -69,7 +81,11 @@ const sidebarMenuItems: MenuItem[] = [
       { key: "6", label: "Option 6" },
       {
         key: "/another",
-        label: <Link to="/another">Another Page</Link>,
+        label: (
+          <Link to="/$lang/another" params={{ lang: "en" }}>
+            Another Page
+          </Link>
+        ),
         icon: <div>Icon</div>,
       },
     ],
@@ -119,6 +135,9 @@ const useLayoutStyles = createStyles(({ token }) => {
       padding: 0,
       background: token.colorBgContainer,
     },
+    logout: {
+      margin: token.marginMD,
+    },
   };
 });
 
@@ -142,7 +161,7 @@ const useApplyRouteSpinner = () => {
 const SiderHeader = () => {
   const layout = useLayoutStyles();
   const theme = useTheme();
-  useApplyRouteSpinner();
+  // useApplyRouteSpinner();
 
   return (
     <Flex
@@ -156,11 +175,10 @@ const SiderHeader = () => {
   );
 };
 
-export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
+export const AppLayout: React.FC<AppLayoutProps> = () => {
   const [collapsed, setCollapsed] = useState(false);
-
   const layout = useLayoutStyles();
-
+  const [logout] = useLogoutMutation();
   return (
     <Layout className={layout.styles.root}>
       <Layout.Sider
@@ -172,6 +190,13 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       >
         <SiderHeader />
         <SiderMenu />
+        <Button
+          danger
+          onClick={() => logout().unwrap()}
+          className={layout.styles.logout}
+        >
+          Logout
+        </Button>
       </Layout.Sider>
 
       <Layout>
@@ -185,7 +210,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           />
         </Layout.Header>
         <Layout.Content className={layout.styles.content}>
-          {children}
+          <Outlet />
         </Layout.Content>
       </Layout>
     </Layout>

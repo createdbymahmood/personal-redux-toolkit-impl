@@ -1,6 +1,6 @@
 import { retry } from "@reduxjs/toolkit/query/react";
 import { api } from "./api";
-import { store } from "../store";
+import { AppDispatch } from "../store";
 
 export interface Post {
   id: number;
@@ -15,9 +15,9 @@ export interface User {
   phone: string;
 }
 
-export const authApi = api.injectEndpoints({
+export const authApiFns = api.injectEndpoints({
   endpoints: build => ({
-    login: build.mutation<{ token: string; user: User }, any>({
+    login: build.mutation<{ token: string; user: User }, unknown>({
       query: (credentials: any) => ({
         url: "login",
         method: "POST",
@@ -72,11 +72,8 @@ const sleep = (ms: number) =>
   new Promise<void>(resolve => setTimeout(() => resolve(), ms));
 
 export const prefetchAuth = {
-  session: async () => {
-    // await sleep(2000);
-    return store
-      .dispatch(authApi.endpoints.refetchSession.initiate(undefined))
-      .unwrap();
+  session: async (d: AppDispatch) => {
+    return d(authApiFns.endpoints.refetchSession.initiate(undefined)).unwrap();
   },
 };
 
@@ -86,4 +83,4 @@ export const {
   useLazyRefetchSessionQuery,
   useGetPokemonByNameQuery,
   useLogoutMutation,
-} = authApi;
+} = authApiFns;

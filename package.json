@@ -48,10 +48,11 @@
     "react-use": "17.5.0",
     "redux-persist": "6.0.0",
     "sonner": "1.4.41",
-    "type-fest": "4.20.0",
+    "type-fest": "^4.20.0",
     "use-query-params": "2.2.1",
     "usehooks-ts": "2.9.1",
-    "vite-plugin-pwa": "0.16.4"
+    "vite-plugin-pwa": "0.16.4",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@changesets/changelog-github": "0.5.0",

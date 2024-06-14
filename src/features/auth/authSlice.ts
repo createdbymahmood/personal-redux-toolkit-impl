@@ -1,5 +1,5 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
-import { authApi } from "../../app/services/auth";
+import { authApiFns } from "../../app/services/auth";
 import type { User } from "../../app/services/auth";
 import type { RootState } from "../../app/store";
 import { assign } from "lodash-es";
@@ -18,7 +18,7 @@ const initialState: AuthState = {
   user: null,
   token: null,
   isAuthenticated: false,
-  isInitialized: true,
+  isInitialized: false,
 };
 
 const tokenReceived = createAction<{}>("token-received");
@@ -32,36 +32,39 @@ const slice = createSlice({
   extraReducers: builder => {
     builder.addCase(tokenReceived, (state, action) => {
       state.user = user;
+      state.isAuthenticated = true;
+      state.isInitialized = true;
     });
 
     /* LOGIN  */
     builder
-      .addMatcher(authApi.endpoints.login.matchPending, (state, action) => {
+      .addMatcher(authApiFns.endpoints.login.matchPending, (state, action) => {
         console.log("pending", action);
-        state.isInitialized = false;
       })
-      .addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
-        console.log("fulfilled", action);
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-        state.isAuthenticated = true;
-        state.isInitialized = true;
-      })
-      .addMatcher(authApi.endpoints.login.matchRejected, (state, action) => {
+      .addMatcher(
+        authApiFns.endpoints.login.matchFulfilled,
+        (state, action) => {
+          console.log("fulfilled", action);
+          state.user = action.payload.user;
+          state.token = action.payload.token;
+          state.isAuthenticated = true;
+          state.isInitialized = true;
+        }
+      )
+      .addMatcher(authApiFns.endpoints.login.matchRejected, (state, action) => {
         console.log("rejected", action);
         state.isInitialized = true;
       })
 
       /* Initialize SESSION */
       .addMatcher(
-        authApi.endpoints.refetchSession.matchPending,
+        authApiFns.endpoints.refetchSession.matchPending,
         (state, action) => {
           console.log("pending", action);
-          state.isInitialized = false;
         }
       )
       .addMatcher(
-        authApi.endpoints.refetchSession.matchFulfilled,
+        authApiFns.endpoints.refetchSession.matchFulfilled,
         (state, action) => {
           console.log("fulfilled", action);
           state.user = action.payload.user;
@@ -71,16 +74,29 @@ const slice = createSlice({
         }
       )
       .addMatcher(
-        authApi.endpoints.refetchSession.matchRejected,
+        authApiFns.endpoints.refetchSession.matchRejected,
         (state, action) => {
           console.log("rejected", action);
           state.isInitialized = true;
+          state.isAuthenticated = false;
+          state.token = null;
+          state.user = null;
         }
       )
-      .addMatcher(authApi.endpoints.logout.matchFulfilled, (state, action) => {
+      .addMatcher(authApiFns.endpoints.logout.matchPending, (state, action) => {
         console.log("logout", action);
-        assign(state, initialState);
-      });
+      })
+      .addMatcher(
+        authApiFns.endpoints.logout.matchFulfilled,
+        (state, action) => {
+          console.log("logout", action);
+          // assign(state, initialState);
+          state.isAuthenticated = false;
+          state.isInitialized = true;
+          state.token = null;
+          state.user = null;
+        }
+      );
   },
 });
 

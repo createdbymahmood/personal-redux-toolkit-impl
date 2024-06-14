@@ -1,15 +1,14 @@
-import { Middleware, combineReducers, configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import authReducer from "../features/auth/authSlice";
 import { api } from "./services/api";
-import { listenerMiddleware } from "./listenerMiddleware";
 
 const authPersistConfig = {
   key: "auth",
   storage,
-  blacklist: [""],
+  blacklist: ["isAuthenticated", "isInitialized"],
 };
 
 const rootReducer = combineReducers({
@@ -17,17 +16,14 @@ const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
 });
 
-const reducer = rootReducer;
-
-const middlewares: Middleware[] = [api.middleware];
-
 export const createStore = () =>
   configureStore({
-    reducer,
+    reducer: rootReducer,
     middleware: getDefaultMiddleware =>
-      getDefaultMiddleware({ serializableCheck: false, immutableCheck: false })
-        .prepend(listenerMiddleware.middleware)
-        .concat(...middlewares),
+      getDefaultMiddleware({
+        immutableCheck: false,
+        serializableCheck: false,
+      }).concat(api.middleware),
   });
 
 export const store = createStore();

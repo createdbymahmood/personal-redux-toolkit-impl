@@ -13,82 +13,93 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as UnauthImport } from './routes/_unauth'
-import { Route as AuthImport } from './routes/_auth'
-import { Route as IndexImport } from './routes/index'
-import { Route as AuthDashboardIndexImport } from './routes/_auth.dashboard.index'
+import { Route as LangUnauthImport } from './routes/$lang/_unauth'
+import { Route as LangAuthImport } from './routes/$lang/_auth'
+import { Route as LangUnauthIndexImport } from './routes/$lang/_unauth.index'
+import { Route as LangAuthAnotherImport } from './routes/$lang/_auth.another'
+import { Route as LangAuthDashboardIndexImport } from './routes/$lang/_auth.dashboard.index'
 
 // Create Virtual Routes
 
-const UnauthAnotherLazyImport = createFileRoute('/_unauth/another')()
+const LangImport = createFileRoute('/$lang')()
 
 // Create/Update Routes
 
-const UnauthRoute = UnauthImport.update({
+const LangRoute = LangImport.update({
+  path: '/$lang',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const LangUnauthRoute = LangUnauthImport.update({
   id: '/_unauth',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => LangRoute,
 } as any)
 
-const AuthRoute = AuthImport.update({
+const LangAuthRoute = LangAuthImport.update({
   id: '/_auth',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => LangRoute,
 } as any)
 
-const IndexRoute = IndexImport.update({
+const LangUnauthIndexRoute = LangUnauthIndexImport.update({
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => LangUnauthRoute,
 } as any)
 
-const UnauthAnotherLazyRoute = UnauthAnotherLazyImport.update({
+const LangAuthAnotherRoute = LangAuthAnotherImport.update({
   path: '/another',
-  getParentRoute: () => UnauthRoute,
-} as any).lazy(() =>
-  import('./routes/_unauth.another.lazy').then((d) => d.Route),
-)
+  getParentRoute: () => LangAuthRoute,
+} as any)
 
-const AuthDashboardIndexRoute = AuthDashboardIndexImport.update({
+const LangAuthDashboardIndexRoute = LangAuthDashboardIndexImport.update({
   path: '/dashboard/',
-  getParentRoute: () => AuthRoute,
+  getParentRoute: () => LangAuthRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
+    '/$lang': {
+      id: '/$lang'
+      path: '/$lang'
+      fullPath: '/$lang'
+      preLoaderRoute: typeof LangImport
       parentRoute: typeof rootRoute
     }
-    '/_auth': {
-      id: '/_auth'
+    '/$lang/_auth': {
+      id: '/$lang/_auth'
+      path: '/$lang'
+      fullPath: '/$lang'
+      preLoaderRoute: typeof LangAuthImport
+      parentRoute: typeof LangRoute
+    }
+    '/$lang/_unauth': {
+      id: '/$lang/_unauth'
       path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthImport
-      parentRoute: typeof rootRoute
+      fullPath: '/$lang'
+      preLoaderRoute: typeof LangUnauthImport
+      parentRoute: typeof LangImport
     }
-    '/_unauth': {
-      id: '/_unauth'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof UnauthImport
-      parentRoute: typeof rootRoute
-    }
-    '/_unauth/another': {
-      id: '/_unauth/another'
+    '/$lang/_auth/another': {
+      id: '/$lang/_auth/another'
       path: '/another'
-      fullPath: '/another'
-      preLoaderRoute: typeof UnauthAnotherLazyImport
-      parentRoute: typeof UnauthImport
+      fullPath: '/$lang/another'
+      preLoaderRoute: typeof LangAuthAnotherImport
+      parentRoute: typeof LangAuthImport
     }
-    '/_auth/dashboard/': {
-      id: '/_auth/dashboard/'
+    '/$lang/_unauth/': {
+      id: '/$lang/_unauth/'
+      path: '/'
+      fullPath: '/$lang/'
+      preLoaderRoute: typeof LangUnauthIndexImport
+      parentRoute: typeof LangUnauthImport
+    }
+    '/$lang/_auth/dashboard/': {
+      id: '/$lang/_auth/dashboard/'
       path: '/dashboard/'
-      fullPath: '/dashboard/'
-      preLoaderRoute: typeof AuthDashboardIndexImport
-      parentRoute: typeof AuthImport
+      fullPath: '/$lang/dashboard/'
+      preLoaderRoute: typeof LangAuthDashboardIndexImport
+      parentRoute: typeof LangAuthImport
     }
   }
 }
@@ -96,9 +107,13 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  IndexRoute,
-  AuthRoute: AuthRoute.addChildren({ AuthDashboardIndexRoute }),
-  UnauthRoute: UnauthRoute.addChildren({ UnauthAnotherLazyRoute }),
+  LangRoute: LangRoute.addChildren({
+    LangAuthRoute: LangAuthRoute.addChildren({
+      LangAuthAnotherRoute,
+      LangAuthDashboardIndexRoute,
+    }),
+    LangUnauthRoute: LangUnauthRoute.addChildren({ LangUnauthIndexRoute }),
+  }),
 })
 
 /* prettier-ignore-end */

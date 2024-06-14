@@ -10,7 +10,6 @@ import {
 import { RootState } from "../store";
 import { Mutex } from "async-mutex";
 import { authActions } from "../../features/auth/authSlice";
-import { authApi } from "./auth";
 import { MaybePromise } from "msw/lib/types/response";
 
 const prepareHeaders = (
@@ -43,7 +42,6 @@ const baseQueryWithReauth: BaseQueryFn<
   // wait until the mutex is available without locking it
   await mutex.waitForUnlock();
   let result = await baseQuery(args, api, extraOptions);
-  console.log("Salam");
 
   if (result.error && result.error.status === 401) {
     // checking whether the mutex is locked
@@ -60,8 +58,8 @@ const baseQueryWithReauth: BaseQueryFn<
           // retry the initial query
           result = await baseQuery(args, api, extraOptions);
         } else {
-          // api.dispatch(auth.logout());
-          authApi.endpoints.logout.initiate();
+          // api.dispatch(authActions.logout());
+          // authApiFns.endpoints.logout.initiate();
         }
       } finally {
         // release must be called once the mutex should be released again.

@@ -1,11 +1,16 @@
-import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
+import {
+  createRootRouteWithContext,
+  Outlet,
+  redirect,
+} from "@tanstack/react-router";
 import { RouteContext } from "../app";
-import { AppLayout } from "../components/common";
+import { memo } from "react";
 
 export const Route = createRootRouteWithContext<RouteContext>()({
-  component: () => (
-    <AppLayout>
-      <Outlet />
-    </AppLayout>
-  ),
+  component: memo(() => <Outlet />),
+  beforeLoad({ context, ...props }) {
+    if (!(props.params as { lang: string })?.lang) {
+      throw redirect({ to: "/$lang/another", params: { lang: context.lang } });
+    }
+  },
 });

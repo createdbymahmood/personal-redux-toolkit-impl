@@ -47,23 +47,32 @@ export const handlers = [
   // rest.post("/login", (req, res, ctx) => {
   //   return res.once(ctx.json({ message: "i fail once" }), ctx.status(500));
   // }),
+
+  rest.post("/login", (req, res, ctx) => {
+    return res.once(ctx.status(403));
+  }),
   rest.post("/login", (req, res, ctx) => {
     return res(ctx.json({ token, user }));
   }),
 
   rest.post("/logout", (req, res, ctx) => {
-    return res(ctx.json({ token, user }), ctx.delay(500));
+    return res(ctx.json({ token, user }));
   }),
-  rest.get("/me", (req, res, ctx) => {
-    return res.once(
-      ctx.status(500),
-      ctx.json({ error: "Salam" }),
-      ctx.delay(500)
-    );
-  }),
+  // rest.get("/me", (req, res, ctx) => {
+  //   return res.once(
+  //     ctx.status(500),
+  //     ctx.json({ error: "Salam" }),
+  //     ctx.delay(500)
+  //   );
+  // }),
 
   rest.get("/me", (req, res, ctx) => {
-    return res(ctx.json({ token, user }), ctx.delay(500));
+    const headers = req.headers.all();
+
+    if (headers.authentication) {
+      return res(ctx.json({ token, user }));
+    }
+    return res(ctx.status(403), ctx.json({ error: "invalid credentials" }));
   }),
 
   // rest.get("/refreshToken", (req, res, ctx) => {
