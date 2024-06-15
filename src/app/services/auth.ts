@@ -16,7 +16,7 @@ export interface User {
   phone: string;
 }
 
-export const authApi = api
+export const auth = api
   .injectEndpoints({
     endpoints: build => ({
       login: build.mutation<{ token: string; user: User }, unknown>({
@@ -85,16 +85,6 @@ const sleep = (ms: number) =>
 export const prefetchAuth = {
   session: async (dispatch: AppDispatch) => {
     // await sleep(0);
-    return dispatch(
-      authApi.endpoints.refetchSession.initiate(undefined)
-    ).unwrap();
+    return dispatch(auth.endpoints.refetchSession.initiate(undefined)).unwrap();
   },
 };
-
-export const {
-  useLoginMutation,
-  useRefetchSessionQuery,
-  useLazyRefetchSessionQuery,
-  useGetPokemonByNameQuery,
-  useLogoutMutation,
-} = authApi;

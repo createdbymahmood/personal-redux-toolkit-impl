@@ -8,7 +8,6 @@ import { routeTree } from "./routeTree.gen";
 
 import { RouterProvider } from "@tanstack/react-router";
 import { Spin } from "antd";
-import { useRefetchSessionQuery } from "./app/services/auth";
 import {
   AppDispatch,
   persistor,
@@ -22,6 +21,8 @@ import {
   ThemeConfigProvider,
 } from "./components/common";
 import "./global.css";
+import { auth } from "./app/services/auth";
+import { authSelectors } from "./features/auth";
 
 export type RouteContext = {
   dispatch: AppDispatch;
@@ -52,12 +53,13 @@ declare module "@tanstack/react-router" {
 }
 
 function InnerApp() {
-  const { isAuthenticated, isInitialized } = useTypedSelector(s => s.auth);
+  const isAuthenticated = useTypedSelector(authSelectors.getIsAuthenticated);
+  const isInitialized = useTypedSelector(authSelectors.getIsInitialized);
   const dispatch = useAppDispatch();
   const isAuth = isAuthenticated && isInitialized;
-  useRefetchSessionQuery();
+  const refetchSession = auth.useRefetchSessionQuery();
 
-  if (!isInitialized) return <Spin />;
+  if (!isInitialized || refetchSession.isLoading) return <Spin />;
 
   return (
     <RouterProvider

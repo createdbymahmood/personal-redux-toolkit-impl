@@ -11,6 +11,7 @@ import { RootState } from "../store";
 import { Mutex } from "async-mutex";
 import { authActions } from "../../features/auth/auth-slice";
 import { MaybePromise } from "msw/lib/types/response";
+import { auth } from "./auth";
 
 const prepareHeaders = (
   headers: Headers,
@@ -59,7 +60,7 @@ const baseQueryWithReauth: BaseQueryFn<
           result = await baseQuery(args, api, extraOptions);
         } else {
           // api.dispatch(authActions.logout());
-          // authApiFns.endpoints.logout.initiate();
+          auth.endpoints.logout.initiate();
         }
       } finally {
         // release must be called once the mutex should be released again.

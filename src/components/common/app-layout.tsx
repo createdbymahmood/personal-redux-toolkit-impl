@@ -17,7 +17,7 @@ import type { MenuProps } from "antd";
 import { get, noop } from "lodash-es";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import { useLogoutMutation } from "../../app/services/auth";
+import { auth } from "../../app/services/auth";
 type MenuItem = Required<MenuProps>["items"][number];
 
 function findKeyAndParent(
@@ -172,7 +172,7 @@ const SiderHeader = () => {
 export const AppLayout: React.FC<AppLayoutProps> = () => {
   const [collapsed, setCollapsed] = useState(false);
   const layout = useLayoutStyles();
-  const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
+  const [logout, { isLoading: isLoggingOut }] = auth.useLogoutMutation();
 
   return (
     <Layout className={layout.styles.root}>

@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useLoginMutation } from "../../app/services/auth";
 import { memo } from "react";
+import { auth } from "../../app/services/auth";
 
 export const Route = createFileRoute("/$lang/_unauth/")({
   component: memo(Login),
 });
 
 function Login() {
-  const [login] = useLoginMutation();
+  const [login] = auth.useLoginMutation();
 
   return (
     <div>
