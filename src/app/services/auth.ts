@@ -84,7 +84,7 @@ const sleep = (ms: number) =>
 
 export const prefetchAuth = {
   session: async (dispatch: AppDispatch) => {
-    await sleep(2000);
+    // await sleep(0);
     return dispatch(
       authApi.endpoints.refetchSession.initiate(undefined)
     ).unwrap();

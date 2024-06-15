@@ -1,4 +1,4 @@
-import { createRouter } from "@tanstack/react-router";
+import { RouterContextOptions, createRouter } from "@tanstack/react-router";
 
 // Import the generated route tree
 import React, { Suspense } from "react";
@@ -35,12 +35,13 @@ export const router = createRouter({
   defaultPendingComponent: Spin,
 
   context: {
-    dispatch: store.dispatch,
-    isAuth: true,
-    lang: "fa",
+    dispatch: undefined!,
+    isAuth: undefined!,
+    lang: undefined!,
   },
 
   defaultErrorComponent: DefaultErrorComponent,
+  defaultPreloadStaleTime: 0,
 });
 
 // Register the router instance for type safety
@@ -60,8 +61,8 @@ function InnerApp() {
 
   return (
     <RouterProvider
-      key={String(isAuth)}
       router={router}
+      defaultPreload="intent"
       context={{ isAuth, dispatch, lang: "en" }}
     />
   );

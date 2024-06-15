@@ -9,6 +9,7 @@ import {
   Outlet,
   ReactNode,
   useLocation,
+  useRouter,
   useRouterState,
 } from "@tanstack/react-router";
 import { useUpdateEffect } from "ahooks";
@@ -55,7 +56,7 @@ const sidebarMenuItems: MenuItem[] = [
         key: "/dashboard",
         label: (
           <Link
-            to="/$lang/dashboard/"
+            to="/$lang/dashboard"
             params={{ lang: "en" }}
             search={{ categories: ["Category"], enabled: true, pageIndex: 2 }}
           >
@@ -172,6 +173,7 @@ export const AppLayout: React.FC<AppLayoutProps> = () => {
   const [collapsed, setCollapsed] = useState(false);
   const layout = useLayoutStyles();
   const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
+
   return (
     <Layout className={layout.styles.root}>
       <Layout.Sider

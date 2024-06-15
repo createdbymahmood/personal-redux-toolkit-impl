@@ -2,7 +2,6 @@ import { createAction, createSlice } from "@reduxjs/toolkit";
 import { authApi } from "../../app/services/auth";
 import type { User } from "../../app/services/auth";
 import type { RootState } from "../../app/store";
-import { assign } from "lodash-es";
 import { user } from "../../mocks/handlers";
 
 export type AuthState = {
@@ -39,6 +38,7 @@ const slice = createSlice({
     /* LOGIN  */
     builder
       .addMatcher(authApi.endpoints.login.matchPending, (state, action) => {
+        state.isInitialized = false;
         console.log("pending", action);
       })
       .addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
@@ -81,6 +81,7 @@ const slice = createSlice({
         }
       )
       .addMatcher(authApi.endpoints.logout.matchPending, (state, action) => {
+        state.isInitialized = false;
         console.log("logout", action);
       })
       .addMatcher(authApi.endpoints.logout.matchFulfilled, (state, action) => {

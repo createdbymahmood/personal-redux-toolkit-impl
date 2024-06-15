@@ -2377,6 +2377,16 @@
     tiny-invariant "^1.3.1"
     tiny-warning "^1.0.3"
 
+"@tanstack/react-router@1.38.1":
+  version "1.38.1"
+  resolved "https://registry.yarnpkg.com/@tanstack/react-router/-/react-router-1.38.1.tgz#e263e9c5dff2e04b73953211c8ed2cc9e459116e"
+  integrity sha512-ET/dJeNNUOYIRgfuadjXA3tL1Kqy8RF5P2+SNiIH+JU5ckibO/K4ZY3RIZ5O9jOXR5jg3vSgQd96EG8k87lgzg==
+  dependencies:
+    "@tanstack/history" "1.31.16"
+    "@tanstack/react-store" "^0.2.1"
+    tiny-invariant "^1.3.1"
+    tiny-warning "^1.0.3"
+
 "@tanstack/react-store@^0.2.1":
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/@tanstack/react-store/-/react-store-0.2.1.tgz#c1a04c85d403d842e56c6d0709211f013bdd1021"
@@ -2395,18 +2405,18 @@
     date-fns "^2.29.1"
     goober "^2.1.14"
 
-"@tanstack/router-generator@1.32.2":
-  version "1.32.2"
-  resolved "https://registry.yarnpkg.com/@tanstack/router-generator/-/router-generator-1.32.2.tgz#4ad7d513fcb07fe07a89dca3f55b159348824526"
-  integrity sha512-x/IZSAoqjzfBA4B3VI5kjp7Uu+6JMYvrM827LwG/EhEt+/SXTFgy5IFwK6huFRz/pkExy68pFDyA5vp8ghCHeA==
+"@tanstack/router-generator@1.37.0":
+  version "1.37.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/router-generator/-/router-generator-1.37.0.tgz#67c82780e72dd6bad8d93449d0e2c88ee683a61f"
+  integrity sha512-sI1B1Zd1SjeY1Uc6Tehi4BfBEl+e5mR7c4COWYRkZRIC3P4870Q54t+7aMGDY/lw4Yd9J2vUcxZ7F4qiTgo62w==
   dependencies:
     prettier "^3.1.1"
     zod "^3.22.4"
 
-"@tanstack/router-vite-plugin@1.32.2":
-  version "1.32.2"
-  resolved "https://registry.yarnpkg.com/@tanstack/router-vite-plugin/-/router-vite-plugin-1.32.2.tgz#c296b66a931295a553f0060d7b02bd96ea31e64d"
-  integrity sha512-1djQJlCyPIWai1SvaBCoWuJoanzgcyywLPzPVYB//kXn/iLde1xBunQT09vTJk5EXt1amqQ82htS6z3ECM0Z0g==
+"@tanstack/router-vite-plugin@1.38.0":
+  version "1.38.0"
+  resolved "https://registry.yarnpkg.com/@tanstack/router-vite-plugin/-/router-vite-plugin-1.38.0.tgz#44a883af951ff1f0f3ee11f8d64e315b263f08b1"
+  integrity sha512-DsMWVQYLZ3cXyVrG7F9hX7BMcsIOWHZxSdTTnCb9wNTVeXLPjp5y5n/k5CeY1zd9QynqAsj032As3W1+sdAlDg==
   dependencies:
     "@babel/core" "^7.23.7"
     "@babel/generator" "^7.23.6"
@@ -2417,7 +2427,7 @@
     "@babel/template" "^7.24.0"
     "@babel/traverse" "^7.24.1"
     "@babel/types" "^7.24.0"
-    "@tanstack/router-generator" "1.32.2"
+    "@tanstack/router-generator" "1.37.0"
     "@types/babel__core" "^7.20.5"
     "@types/babel__generator" "^7.6.8"
     "@types/babel__template" "^7.4.4"

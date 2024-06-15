@@ -96,8 +96,8 @@ declare module '@tanstack/react-router' {
     }
     '/$lang/_auth/dashboard/': {
       id: '/$lang/_auth/dashboard/'
-      path: '/dashboard/'
-      fullPath: '/$lang/dashboard/'
+      path: '/dashboard'
+      fullPath: '/$lang/dashboard'
       preLoaderRoute: typeof LangAuthDashboardIndexImport
       parentRoute: typeof LangAuthImport
     }
@@ -117,3 +117,50 @@ export const routeTree = rootRoute.addChildren({
 })
 
 /* prettier-ignore-end */
+
+/* ROUTE_MANIFEST_START
+{
+  "routes": {
+    "__root__": {
+      "filePath": "__root.tsx",
+      "children": [
+        "/$lang"
+      ]
+    },
+    "/$lang": {
+      "filePath": "$lang",
+      "children": [
+        "/$lang/_auth",
+        "/$lang/_unauth"
+      ]
+    },
+    "/$lang/_auth": {
+      "filePath": "$lang/_auth.tsx",
+      "parent": "/$lang",
+      "children": [
+        "/$lang/_auth/another",
+        "/$lang/_auth/dashboard/"
+      ]
+    },
+    "/$lang/_unauth": {
+      "filePath": "$lang/_unauth.tsx",
+      "parent": "/$lang",
+      "children": [
+        "/$lang/_unauth/"
+      ]
+    },
+    "/$lang/_auth/another": {
+      "filePath": "$lang/_auth.another.tsx",
+      "parent": "/$lang/_auth"
+    },
+    "/$lang/_unauth/": {
+      "filePath": "$lang/_unauth.index.tsx",
+      "parent": "/$lang/_unauth"
+    },
+    "/$lang/_auth/dashboard/": {
+      "filePath": "$lang/_auth.dashboard.index.tsx",
+      "parent": "/$lang/_auth"
+    }
+  }
+}
+ROUTE_MANIFEST_END */
