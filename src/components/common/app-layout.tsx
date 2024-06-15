@@ -1,28 +1,21 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Flex, Layout, Menu, Spin, Typography } from "antd";
+import { Button, Flex, Layout, Menu, Typography } from "antd";
 import { createStyles, useTheme } from "antd-style";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
-import {
-  AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import { AppstoreOutlined, MailOutlined } from "@ant-design/icons";
 import {
   Link,
   Outlet,
   ReactNode,
   useLocation,
-  useNavigate,
-  useParams,
-  useRouter,
   useRouterState,
 } from "@tanstack/react-router";
+import { useUpdateEffect } from "ahooks";
 import type { MenuProps } from "antd";
+import { get, noop } from "lodash-es";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import { useMount, useUnmount, useUpdateEffect } from "ahooks";
-import { get, noop } from "lodash-es";
 import { useLogoutMutation } from "../../app/services/auth";
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -178,7 +171,7 @@ const SiderHeader = () => {
 export const AppLayout: React.FC<AppLayoutProps> = () => {
   const [collapsed, setCollapsed] = useState(false);
   const layout = useLayoutStyles();
-  const [logout] = useLogoutMutation();
+  const [logout, { isLoading: isLoggingOut }] = useLogoutMutation();
   return (
     <Layout className={layout.styles.root}>
       <Layout.Sider
@@ -191,6 +184,7 @@ export const AppLayout: React.FC<AppLayoutProps> = () => {
         <SiderHeader />
         <SiderMenu />
         <Button
+          loading={isLoggingOut}
           danger
           onClick={() => logout().unwrap()}
           className={layout.styles.logout}

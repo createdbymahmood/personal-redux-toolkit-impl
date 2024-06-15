@@ -52,11 +52,11 @@ export const handlers = [
     return res.once(ctx.status(403));
   }),
   rest.post("/login", (req, res, ctx) => {
-    return res(ctx.json({ token, user }));
+    return res(ctx.json({ token, user }), ctx.delay(2000));
   }),
 
   rest.post("/logout", (req, res, ctx) => {
-    return res(ctx.json({ token, user }));
+    return res(ctx.json({ token, user }), ctx.delay(2000));
   }),
   // rest.get("/me", (req, res, ctx) => {
   //   return res.once(
@@ -67,12 +67,17 @@ export const handlers = [
   // }),
 
   rest.get("/me", (req, res, ctx) => {
+    /* @ts-ignore */
     const headers = req.headers.all();
 
     if (headers.authentication) {
       return res(ctx.json({ token, user }));
     }
-    return res(ctx.status(403), ctx.json({ error: "invalid credentials" }));
+    return res(
+      ctx.status(403),
+      ctx.json({ error: "invalid credentials" }),
+      ctx.delay(2000)
+    );
   }),
 
   // rest.get("/refreshToken", (req, res, ctx) => {

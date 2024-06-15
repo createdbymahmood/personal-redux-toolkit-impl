@@ -9,7 +9,7 @@ import {
 } from "@reduxjs/toolkit/query/react";
 import { RootState } from "../store";
 import { Mutex } from "async-mutex";
-import { authActions } from "../../features/auth/authSlice";
+import { authActions } from "../../features/auth/auth-slice";
 import { MaybePromise } from "msw/lib/types/response";
 
 const prepareHeaders = (

@@ -1,16 +1,26 @@
-import { createRouter, useRouter } from "@tanstack/react-router";
+import { createRouter } from "@tanstack/react-router";
 
 // Import the generated route tree
 import React, { Suspense } from "react";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { routeTree } from "./routeTree.gen";
 
 import { RouterProvider } from "@tanstack/react-router";
-import { Button, ConfigProvider, Result, Spin, theme } from "antd";
+import { Spin } from "antd";
 import { useRefetchSessionQuery } from "./app/services/auth";
-import { AppDispatch, persistor, store, useTypedSelector } from "./app/store";
+import {
+  AppDispatch,
+  persistor,
+  store,
+  useAppDispatch,
+  useTypedSelector,
+} from "./app/store";
 import "./assets/fonts/iran-yekan/stylesheet.css";
+import {
+  DefaultErrorComponent,
+  ThemeConfigProvider,
+} from "./components/common";
 import "./global.css";
 
 export type RouteContext = {
@@ -30,27 +40,7 @@ export const router = createRouter({
     lang: "fa",
   },
 
-  defaultErrorComponent: ({ reset, error }) => {
-    const router = useRouter();
-    return (
-      <Result
-        status="500"
-        title="500"
-        subTitle="Sorry, something went wrong."
-        extra={
-          <Button
-            type="primary"
-            onClick={() => {
-              reset?.();
-              router.invalidate();
-            }}
-          >
-            Retry
-          </Button>
-        }
-      />
-    );
-  },
+  defaultErrorComponent: DefaultErrorComponent,
 });
 
 // Register the router instance for type safety
@@ -62,7 +52,7 @@ declare module "@tanstack/react-router" {
 
 function InnerApp() {
   const { isAuthenticated, isInitialized } = useTypedSelector(s => s.auth);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isAuth = isAuthenticated && isInitialized;
   useRefetchSessionQuery();
 
@@ -83,21 +73,9 @@ export const App = () => {
       <Suspense fallback={<Spin />}>
         <Provider store={store}>
           <PersistGate loading={<Spin />} persistor={persistor}>
-            <ConfigProvider
-              theme={{
-                algorithm: theme.darkAlgorithm,
-                token: {
-                  fontFamily: "SF Mono, SF Arabic",
-                },
-                components: {
-                  Menu: {
-                    // itemHeight: 30,
-                  },
-                },
-              }}
-            >
+            <ThemeConfigProvider>
               <InnerApp />
-            </ConfigProvider>
+            </ThemeConfigProvider>
           </PersistGate>
         </Provider>
       </Suspense>

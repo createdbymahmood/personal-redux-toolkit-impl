@@ -1,7 +1,6 @@
 import { Grid } from "antd";
 import { useResponsive } from "antd-style";
 import { Breakpoint } from "antd/lib";
-import { CSSProperties } from "react";
 
 // Define the props for useResponsiveValue
 type UseCStylesProps<T> = {

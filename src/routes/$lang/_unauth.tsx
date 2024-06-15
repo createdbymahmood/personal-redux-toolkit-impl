@@ -3,7 +3,6 @@ import { memo } from "react";
 export const Route = createFileRoute("/$lang/_unauth")({
   component: memo(() => <Outlet />),
   beforeLoad({ context }) {
-    console.log(context.isAuth);
     if (context.isAuth)
       throw redirect({
         to: "/$lang/another",
