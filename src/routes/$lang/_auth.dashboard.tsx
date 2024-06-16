@@ -1,10 +1,10 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router";
+import { Card } from "antd";
 
 export const Route = createFileRoute("/$lang/_auth/dashboard")({
   component: () => (
-    <div>
-      OUTLET SLAMA
+    <Card>
       <Outlet />
-    </div>
+    </Card>
   ),
 });

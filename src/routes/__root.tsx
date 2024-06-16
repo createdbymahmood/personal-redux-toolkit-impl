@@ -13,7 +13,7 @@ export const Route = createRootRouteWithContext<RouteContext>()({
       throw redirect({
         to: "/$lang/dashboard",
         params: { lang: context.lang },
-        search: { categories: [""], pageIndex: 0, enabled: true },
+        search: { categories: ["QueryString"], pageIndex: 0, enabled: true },
       });
     }
   },

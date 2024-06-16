@@ -10,6 +10,9 @@ export const Route = createFileRoute("/$lang/_auth")({
       throw redirect({
         to: "/$lang",
         params: { lang: context.lang },
+        search: {
+          redirect: props.location.href,
+        },
       });
     }
   },

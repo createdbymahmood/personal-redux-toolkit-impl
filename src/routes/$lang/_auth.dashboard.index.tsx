@@ -84,7 +84,6 @@ function Dashboard() {
   const navigate = useNavigate();
   const location = useLocation();
   const lang = Route.useRouteContext({ select: s => s.lang });
-
   const update = () => {
     navigate({
       to: "/$lang/dashboard",

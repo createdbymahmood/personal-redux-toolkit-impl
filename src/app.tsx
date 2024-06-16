@@ -1,4 +1,4 @@
-import { RouterContextOptions, createRouter } from "@tanstack/react-router";
+import { createRouter } from "@tanstack/react-router";
 
 // Import the generated route tree
 import React, { Suspense } from "react";
@@ -8,6 +8,8 @@ import { routeTree } from "./routeTree.gen";
 
 import { RouterProvider } from "@tanstack/react-router";
 import { Spin } from "antd";
+import { I18nextProvider } from "react-i18next";
+import { auth } from "./app/services/auth";
 import {
   AppDispatch,
   persistor,
@@ -21,10 +23,8 @@ import {
   DefaultNotFound,
   ThemeConfigProvider,
 } from "./components/common";
-import "./global.css";
-import { auth } from "./app/services/auth";
 import { authSelectors } from "./features/auth";
-import { I18nextProvider } from "react-i18next";
+import "./global.css";
 import i18n from "./lib/i18next-config";
 
 export type RouteContext = {
@@ -63,10 +63,11 @@ function InnerApp() {
   const isAuth = isAuthenticated && isInitialized;
   const refetchSession = auth.useRefetchSessionQuery();
 
-  if (!isInitialized || refetchSession.isLoading) return <Spin />;
+  if (!isInitialized || refetchSession.isLoading) return null;
 
   return (
     <RouterProvider
+      key={String(isAuth)}
       router={router}
       defaultPreload="intent"
       context={{ isAuth, dispatch, lang: "en" }}
