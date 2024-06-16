@@ -1,6 +1,7 @@
 import { z } from "zod";
 import i18n from "../lib/i18next/i18next-config";
 import { ArrayValues } from "type-fest";
+import { get } from "lodash-es";
 
 const ROUTER_CODE = ["PARSE_PARAMS", "VALIDATE_SEARCH"] as const;
 
@@ -25,5 +26,12 @@ export const routerCodeMessagesMap: Record<RuoterCode, ErrorDescription> = {
 };
 
 export type RuoterCode = ArrayValues<typeof ROUTER_CODE>;
+
+export const routerErrorToClientMessage = (error: unknown) => {
+  return get(
+    routerCodeMessagesMap,
+    (error as { routerCode: RuoterCode })?.routerCode
+  );
+};
 
 const toClientErrorMessage = () => {};

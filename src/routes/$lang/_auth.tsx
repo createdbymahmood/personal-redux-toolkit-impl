@@ -1,9 +1,9 @@
 import { Link, createFileRoute, redirect } from "@tanstack/react-router";
-import * as React from "react";
 import { AppLayout } from "../../components/common";
+import { memo } from "react";
 
 export const Route = createFileRoute("/$lang/_auth")({
-  component: React.memo(AppLayout),
+  component: memo(AppLayout),
 
   beforeLoad({ context, ...props }) {
     if (!(props.params as { lang: string })?.lang || !context.isAuth) {
