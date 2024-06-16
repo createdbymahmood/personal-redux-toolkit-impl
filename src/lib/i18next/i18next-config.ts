@@ -6,10 +6,7 @@ import errors from "./errors.json";
 export const defaultNS = "ns1";
 
 export const resources = {
-  en: {
-    ns1,
-    errors,
-  },
+  en: { ns1, errors },
 } as const;
 
 i18n.use(initReactI18next).init({

@@ -25,7 +25,7 @@ import {
 } from "./components/common";
 import { authSelectors } from "./features/auth";
 import "./global.css";
-import i18n from "./lib/i18next-config";
+import i18n from "./lib/i18next/i18next-config";
 
 export type RouteContext = {
   dispatch: AppDispatch;

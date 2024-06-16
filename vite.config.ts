@@ -10,6 +10,7 @@ const getManualChunks = (id: string) => {
   if (!id.includes("node_modules")) return;
   const isVendor = some(vendors, vendor => includes(id, vendor));
   if (isVendor) return "vendors";
+
   return id.toString().split("node_modules/")[1].split("/")[0].toString();
 };
 

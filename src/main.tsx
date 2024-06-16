@@ -3,7 +3,8 @@ import { createRoot } from "react-dom/client";
 import "./assets/fonts/iran-yekan/stylesheet.css";
 import "./global.css";
 import { worker } from "./mocks/browser.ts";
-
+import * as a from "ahooks";
+console.log({ a });
 import { App } from "./app";
 async function render() {
   await worker.start();
