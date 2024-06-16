@@ -11,7 +11,7 @@ import { z } from "zod";
 
 const defaultNoAccessFallbackRoute: Redirect = {
   to: "/$lang/dashboard",
-  params: { lang: "fa" },
+  params: { lang: "en" },
   search: { categories: ["String"], enabled: true, pageIndex: 1 },
 };
 

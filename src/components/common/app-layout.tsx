@@ -3,13 +3,13 @@ import { Button, Flex, Layout, Menu, Typography } from "antd";
 import { createStyles, useTheme } from "antd-style";
 import React, { useMemo, useState } from "react";
 
-import { AppstoreOutlined, MailOutlined } from "@ant-design/icons";
+import { MailOutlined } from "@ant-design/icons";
+import { nanoid } from "@reduxjs/toolkit";
 import {
   Link,
   Outlet,
   ReactNode,
   useLocation,
-  useRouter,
   useRouterState,
 } from "@tanstack/react-router";
 import { useUpdateEffect } from "ahooks";
@@ -64,15 +64,28 @@ const sidebarMenuItems: MenuItem[] = [
           </Link>
         ),
       },
-    ],
-  },
-  {
-    key: "sub2",
-    label: "Navigation Two",
-    icon: <AppstoreOutlined />,
-    children: [
-      { key: "5", label: "Option 5" },
-      { key: "6", label: "Option 6" },
+      {
+        key: "/invoices",
+        label: (
+          <Link to="/$lang/dashboard/invoices" params={{ lang: "en" }}>
+            Invoices
+          </Link>
+        ),
+        children: [
+          {
+            key: "/invoices/id",
+            label: (
+              <Link
+                to="/$lang/dashboard/invoices/$invoiceId"
+                params={{ lang: "en", invoiceId: nanoid() }}
+              >
+                InvoiceId
+              </Link>
+            ),
+          },
+        ],
+      },
+
       {
         key: "/another",
         label: (
@@ -91,7 +104,7 @@ const SiderMenu: React.FC = () => {
   const currentUrl = location.href;
   const activeMenuItems = findKeyAndParent(sidebarMenuItems, currentUrl);
   const defaultSelectedKeys = [activeMenuItems.targetKey] as string[];
-  const defaultOpenKeys = [activeMenuItems.parentKey] as string[];
+  const defaultOpenKeys = ["sub1"] as string[];
 
   return (
     <Menu

@@ -7,7 +7,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { routeTree } from "./routeTree.gen";
 
 import { RouterProvider } from "@tanstack/react-router";
-import { Spin } from "antd";
+import { Skeleton, Spin, theme } from "antd";
 import { I18nextProvider } from "react-i18next";
 import { auth } from "./app/services/auth";
 import {
@@ -36,7 +36,13 @@ export type RouteContext = {
 // Create a new router instance
 export const router = createRouter({
   routeTree,
-  defaultPendingComponent: Spin,
+  defaultPendingComponent: () => (
+    <Skeleton
+      avatar
+      paragraph={{ rows: 4 }}
+      style={{ margin: theme.useToken().token.marginLG }}
+    />
+  ),
 
   context: {
     dispatch: undefined!,
