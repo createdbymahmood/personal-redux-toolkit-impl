@@ -16,6 +16,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LangUnauthImport } from './routes/$lang/_unauth'
 import { Route as LangAuthImport } from './routes/$lang/_auth'
 import { Route as LangUnauthIndexImport } from './routes/$lang/_unauth.index'
+import { Route as LangAuthDashboardImport } from './routes/$lang/_auth.dashboard'
 import { Route as LangAuthAnotherImport } from './routes/$lang/_auth.another'
 import { Route as LangAuthDashboardIndexImport } from './routes/$lang/_auth.dashboard.index'
 
@@ -45,14 +46,19 @@ const LangUnauthIndexRoute = LangUnauthIndexImport.update({
   getParentRoute: () => LangUnauthRoute,
 } as any)
 
+const LangAuthDashboardRoute = LangAuthDashboardImport.update({
+  path: '/dashboard',
+  getParentRoute: () => LangAuthRoute,
+} as any)
+
 const LangAuthAnotherRoute = LangAuthAnotherImport.update({
   path: '/another',
   getParentRoute: () => LangAuthRoute,
 } as any)
 
 const LangAuthDashboardIndexRoute = LangAuthDashboardIndexImport.update({
-  path: '/dashboard/',
-  getParentRoute: () => LangAuthRoute,
+  path: '/',
+  getParentRoute: () => LangAuthDashboardRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -87,6 +93,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangAuthAnotherImport
       parentRoute: typeof LangAuthImport
     }
+    '/$lang/_auth/dashboard': {
+      id: '/$lang/_auth/dashboard'
+      path: '/dashboard'
+      fullPath: '/$lang/dashboard'
+      preLoaderRoute: typeof LangAuthDashboardImport
+      parentRoute: typeof LangAuthImport
+    }
     '/$lang/_unauth/': {
       id: '/$lang/_unauth/'
       path: '/'
@@ -96,10 +109,10 @@ declare module '@tanstack/react-router' {
     }
     '/$lang/_auth/dashboard/': {
       id: '/$lang/_auth/dashboard/'
-      path: '/dashboard'
-      fullPath: '/$lang/dashboard'
+      path: '/'
+      fullPath: '/$lang/dashboard/'
       preLoaderRoute: typeof LangAuthDashboardIndexImport
-      parentRoute: typeof LangAuthImport
+      parentRoute: typeof LangAuthDashboardImport
     }
   }
 }
@@ -110,7 +123,9 @@ export const routeTree = rootRoute.addChildren({
   LangRoute: LangRoute.addChildren({
     LangAuthRoute: LangAuthRoute.addChildren({
       LangAuthAnotherRoute,
-      LangAuthDashboardIndexRoute,
+      LangAuthDashboardRoute: LangAuthDashboardRoute.addChildren({
+        LangAuthDashboardIndexRoute,
+      }),
     }),
     LangUnauthRoute: LangUnauthRoute.addChildren({ LangUnauthIndexRoute }),
   }),
@@ -139,7 +154,7 @@ export const routeTree = rootRoute.addChildren({
       "parent": "/$lang",
       "children": [
         "/$lang/_auth/another",
-        "/$lang/_auth/dashboard/"
+        "/$lang/_auth/dashboard"
       ]
     },
     "/$lang/_unauth": {
@@ -153,13 +168,20 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "$lang/_auth.another.tsx",
       "parent": "/$lang/_auth"
     },
+    "/$lang/_auth/dashboard": {
+      "filePath": "$lang/_auth.dashboard.tsx",
+      "parent": "/$lang/_auth",
+      "children": [
+        "/$lang/_auth/dashboard/"
+      ]
+    },
     "/$lang/_unauth/": {
       "filePath": "$lang/_unauth.index.tsx",
       "parent": "/$lang/_unauth"
     },
     "/$lang/_auth/dashboard/": {
       "filePath": "$lang/_auth.dashboard.index.tsx",
-      "parent": "/$lang/_auth"
+      "parent": "/$lang/_auth/dashboard"
     }
   }
 }

@@ -1,0 +1,10 @@
+{
+  "PARSE_PARAMS": {
+    "title": "Invalid params",
+    "description": "لطفا از درستی آدرس وارد شده اطمینان حاصل فرمایید"
+  },
+  "VALIDATE_SEARCH": {
+    "title": "Invalid search",
+    "description": "لطفا از درستی آدرس وارد شده اطمینان حاصل فرمایید"
+  }
+}

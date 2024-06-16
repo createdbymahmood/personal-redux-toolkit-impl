@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { Link, createFileRoute, redirect } from "@tanstack/react-router";
 import * as React from "react";
 import { AppLayout } from "../../components/common";
 
@@ -7,7 +7,10 @@ export const Route = createFileRoute("/$lang/_auth")({
 
   beforeLoad({ context, ...props }) {
     if (!(props.params as { lang: string })?.lang || !context.isAuth) {
-      throw redirect({ to: "/$lang", params: { lang: context.lang } });
+      throw redirect({
+        to: "/$lang",
+        params: { lang: context.lang },
+      });
     }
   },
 });

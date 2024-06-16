@@ -17,12 +17,15 @@ import {
 } from "./app/store";
 import "./assets/fonts/iran-yekan/stylesheet.css";
 import {
-  DefaultErrorComponent,
+  DefaultError,
+  DefaultNotFound,
   ThemeConfigProvider,
 } from "./components/common";
 import "./global.css";
 import { auth } from "./app/services/auth";
 import { authSelectors } from "./features/auth";
+import { I18nextProvider } from "react-i18next";
+import i18n from "./lib/i18next-config";
 
 export type RouteContext = {
   dispatch: AppDispatch;
@@ -41,8 +44,9 @@ export const router = createRouter({
     lang: undefined!,
   },
 
-  defaultErrorComponent: DefaultErrorComponent,
+  defaultErrorComponent: DefaultError,
   defaultPreloadStaleTime: 0,
+  defaultNotFoundComponent: DefaultNotFound,
 });
 
 // Register the router instance for type safety
@@ -77,7 +81,9 @@ export const App = () => {
         <Provider store={store}>
           <PersistGate loading={<Spin />} persistor={persistor}>
             <ThemeConfigProvider>
-              <InnerApp />
+              <I18nextProvider i18n={i18n}>
+                <InnerApp />
+              </I18nextProvider>
             </ThemeConfigProvider>
           </PersistGate>
         </Provider>

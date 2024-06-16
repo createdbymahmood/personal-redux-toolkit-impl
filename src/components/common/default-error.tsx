@@ -2,11 +2,7 @@ import { ErrorRouteComponent, useRouter } from "@tanstack/react-router";
 import { Button, Result } from "antd";
 import { useCallback } from "react";
 
-export const DefaultErrorComponent: ErrorRouteComponent = ({
-  error,
-  reset,
-  info,
-}) => {
+export const DefaultError: ErrorRouteComponent = ({ error, reset, info }) => {
   const router = useRouter();
   const resetError = useCallback(() => {
     reset?.();
