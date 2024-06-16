@@ -1,15 +1,18 @@
+import { createFileRoute } from "@tanstack/react-router";
+
 import {
   ErrorComponentProps,
-  createFileRoute,
   useLocation,
   useNavigate,
 } from "@tanstack/react-router";
 import { Button, Result } from "antd";
-import { z } from "zod";
-import { routerErrorToClientMessage } from "../../utils/error";
 import { memo } from "react";
+import { z } from "zod";
+import { routerErrorToClientMessage } from "../../../../utils/error";
 
-export const Route = createFileRoute("/$lang/_auth/dashboard/")({
+export const Route = createFileRoute(
+  "/$lang/_auth/(cms)/dashboard/temp"
+)({
   component: memo(Dashboard),
   validateSearch: z.object({
     pageIndex: z.number(),

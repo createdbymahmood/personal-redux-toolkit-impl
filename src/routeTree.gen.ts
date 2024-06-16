@@ -16,11 +16,15 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as LangUnauthImport } from './routes/$lang/_unauth'
 import { Route as LangAuthImport } from './routes/$lang/_auth'
 import { Route as LangUnauthIndexImport } from './routes/$lang/_unauth.index'
-import { Route as LangAuthDashboardImport } from './routes/$lang/_auth.dashboard'
-import { Route as LangAuthAnotherImport } from './routes/$lang/_auth.another'
-import { Route as LangAuthDashboardIndexImport } from './routes/$lang/_auth.dashboard.index'
-import { Route as LangAuthDashboardInvoicesImport } from './routes/$lang/_auth.dashboard_.invoices'
-import { Route as LangAuthDashboardInvoicesInvoiceIdImport } from './routes/$lang/_auth.dashboard_.invoices_.$invoiceId'
+import { Route as LangAuthAnotherImport } from './routes/$lang/_auth/another'
+import { Route as LangAuthcmsDashboardImport } from './routes/$lang/_auth/(cms)/dashboard'
+import { Route as LangAuthcmsDashboardIndexImport } from './routes/$lang/_auth/(cms)/dashboard.index'
+import { Route as LangAuthinvoiceDashboardInvoicesImport } from './routes/$lang/_auth/(invoice)/dashboard.invoices'
+import { Route as LangAuthcmsDashboardUsersImport } from './routes/$lang/_auth/(cms)/dashboard.users'
+import { Route as LangAuthcmsDashboardTempImport } from './routes/$lang/_auth/(cms)/dashboard.temp'
+import { Route as LangAuthcmsDashboardPostsImport } from './routes/$lang/_auth/(cms)/dashboard.posts'
+import { Route as LangAuthcmsDashboardCommentsImport } from './routes/$lang/_auth/(cms)/dashboard.comments'
+import { Route as LangAuthinvoiceDashboardInvoicesInvoiceIdImport } from './routes/$lang/_auth/(invoice)/dashboard.invoices_.$invoiceId'
 
 // Create Virtual Routes
 
@@ -48,28 +52,50 @@ const LangUnauthIndexRoute = LangUnauthIndexImport.update({
   getParentRoute: () => LangUnauthRoute,
 } as any)
 
-const LangAuthDashboardRoute = LangAuthDashboardImport.update({
-  path: '/dashboard',
-  getParentRoute: () => LangAuthRoute,
-} as any)
-
 const LangAuthAnotherRoute = LangAuthAnotherImport.update({
   path: '/another',
   getParentRoute: () => LangAuthRoute,
 } as any)
 
-const LangAuthDashboardIndexRoute = LangAuthDashboardIndexImport.update({
-  path: '/',
-  getParentRoute: () => LangAuthDashboardRoute,
-} as any)
-
-const LangAuthDashboardInvoicesRoute = LangAuthDashboardInvoicesImport.update({
-  path: '/dashboard/invoices',
+const LangAuthcmsDashboardRoute = LangAuthcmsDashboardImport.update({
+  path: '/dashboard',
   getParentRoute: () => LangAuthRoute,
 } as any)
 
-const LangAuthDashboardInvoicesInvoiceIdRoute =
-  LangAuthDashboardInvoicesInvoiceIdImport.update({
+const LangAuthcmsDashboardIndexRoute = LangAuthcmsDashboardIndexImport.update({
+  path: '/',
+  getParentRoute: () => LangAuthcmsDashboardRoute,
+} as any)
+
+const LangAuthinvoiceDashboardInvoicesRoute =
+  LangAuthinvoiceDashboardInvoicesImport.update({
+    path: '/dashboard/invoices',
+    getParentRoute: () => LangAuthRoute,
+  } as any)
+
+const LangAuthcmsDashboardUsersRoute = LangAuthcmsDashboardUsersImport.update({
+  path: '/users',
+  getParentRoute: () => LangAuthcmsDashboardRoute,
+} as any)
+
+const LangAuthcmsDashboardTempRoute = LangAuthcmsDashboardTempImport.update({
+  path: '/temp',
+  getParentRoute: () => LangAuthcmsDashboardRoute,
+} as any)
+
+const LangAuthcmsDashboardPostsRoute = LangAuthcmsDashboardPostsImport.update({
+  path: '/posts',
+  getParentRoute: () => LangAuthcmsDashboardRoute,
+} as any)
+
+const LangAuthcmsDashboardCommentsRoute =
+  LangAuthcmsDashboardCommentsImport.update({
+    path: '/comments',
+    getParentRoute: () => LangAuthcmsDashboardRoute,
+  } as any)
+
+const LangAuthinvoiceDashboardInvoicesInvoiceIdRoute =
+  LangAuthinvoiceDashboardInvoicesInvoiceIdImport.update({
     path: '/dashboard/invoices/$invoiceId',
     getParentRoute: () => LangAuthRoute,
   } as any)
@@ -106,13 +132,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangAuthAnotherImport
       parentRoute: typeof LangAuthImport
     }
-    '/$lang/_auth/dashboard': {
-      id: '/$lang/_auth/dashboard'
-      path: '/dashboard'
-      fullPath: '/$lang/dashboard'
-      preLoaderRoute: typeof LangAuthDashboardImport
-      parentRoute: typeof LangAuthImport
-    }
     '/$lang/_unauth/': {
       id: '/$lang/_unauth/'
       path: '/'
@@ -120,25 +139,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangUnauthIndexImport
       parentRoute: typeof LangUnauthImport
     }
-    '/$lang/_auth/dashboard/invoices': {
+    '/$lang/_auth/(cms)/dashboard': {
+      id: '/$lang/_auth/dashboard'
+      path: '/dashboard'
+      fullPath: '/$lang/dashboard'
+      preLoaderRoute: typeof LangAuthcmsDashboardImport
+      parentRoute: typeof LangAuthImport
+    }
+    '/$lang/_auth/(cms)/dashboard/comments': {
+      id: '/$lang/_auth/dashboard/comments'
+      path: '/comments'
+      fullPath: '/$lang/dashboard/comments'
+      preLoaderRoute: typeof LangAuthcmsDashboardCommentsImport
+      parentRoute: typeof LangAuthcmsDashboardImport
+    }
+    '/$lang/_auth/(cms)/dashboard/posts': {
+      id: '/$lang/_auth/dashboard/posts'
+      path: '/posts'
+      fullPath: '/$lang/dashboard/posts'
+      preLoaderRoute: typeof LangAuthcmsDashboardPostsImport
+      parentRoute: typeof LangAuthcmsDashboardImport
+    }
+    '/$lang/_auth/(cms)/dashboard/temp': {
+      id: '/$lang/_auth/dashboard/temp'
+      path: '/temp'
+      fullPath: '/$lang/dashboard/temp'
+      preLoaderRoute: typeof LangAuthcmsDashboardTempImport
+      parentRoute: typeof LangAuthcmsDashboardImport
+    }
+    '/$lang/_auth/(cms)/dashboard/users': {
+      id: '/$lang/_auth/dashboard/users'
+      path: '/users'
+      fullPath: '/$lang/dashboard/users'
+      preLoaderRoute: typeof LangAuthcmsDashboardUsersImport
+      parentRoute: typeof LangAuthcmsDashboardImport
+    }
+    '/$lang/_auth/(invoice)/dashboard/invoices': {
       id: '/$lang/_auth/dashboard/invoices'
       path: '/dashboard/invoices'
       fullPath: '/$lang/dashboard/invoices'
-      preLoaderRoute: typeof LangAuthDashboardInvoicesImport
+      preLoaderRoute: typeof LangAuthinvoiceDashboardInvoicesImport
       parentRoute: typeof LangAuthImport
     }
-    '/$lang/_auth/dashboard/': {
+    '/$lang/_auth/(cms)/dashboard/': {
       id: '/$lang/_auth/dashboard/'
       path: '/'
       fullPath: '/$lang/dashboard/'
-      preLoaderRoute: typeof LangAuthDashboardIndexImport
-      parentRoute: typeof LangAuthDashboardImport
+      preLoaderRoute: typeof LangAuthcmsDashboardIndexImport
+      parentRoute: typeof LangAuthcmsDashboardImport
     }
-    '/$lang/_auth/dashboard/invoices/$invoiceId': {
+    '/$lang/_auth/(invoice)/dashboard/invoices/$invoiceId': {
       id: '/$lang/_auth/dashboard/invoices/$invoiceId'
       path: '/dashboard/invoices/$invoiceId'
       fullPath: '/$lang/dashboard/invoices/$invoiceId'
-      preLoaderRoute: typeof LangAuthDashboardInvoicesInvoiceIdImport
+      preLoaderRoute: typeof LangAuthinvoiceDashboardInvoicesInvoiceIdImport
       parentRoute: typeof LangAuthImport
     }
   }
@@ -150,11 +204,15 @@ export const routeTree = rootRoute.addChildren({
   LangRoute: LangRoute.addChildren({
     LangAuthRoute: LangAuthRoute.addChildren({
       LangAuthAnotherRoute,
-      LangAuthDashboardRoute: LangAuthDashboardRoute.addChildren({
-        LangAuthDashboardIndexRoute,
+      LangAuthcmsDashboardRoute: LangAuthcmsDashboardRoute.addChildren({
+        LangAuthcmsDashboardCommentsRoute,
+        LangAuthcmsDashboardPostsRoute,
+        LangAuthcmsDashboardTempRoute,
+        LangAuthcmsDashboardUsersRoute,
+        LangAuthcmsDashboardIndexRoute,
       }),
-      LangAuthDashboardInvoicesRoute,
-      LangAuthDashboardInvoicesInvoiceIdRoute,
+      LangAuthinvoiceDashboardInvoicesRoute,
+      LangAuthinvoiceDashboardInvoicesInvoiceIdRoute,
     }),
     LangUnauthRoute: LangUnauthRoute.addChildren({ LangUnauthIndexRoute }),
   }),
@@ -196,30 +254,50 @@ export const routeTree = rootRoute.addChildren({
       ]
     },
     "/$lang/_auth/another": {
-      "filePath": "$lang/_auth.another.tsx",
+      "filePath": "$lang/_auth/another.tsx",
       "parent": "/$lang/_auth"
-    },
-    "/$lang/_auth/dashboard": {
-      "filePath": "$lang/_auth.dashboard.tsx",
-      "parent": "/$lang/_auth",
-      "children": [
-        "/$lang/_auth/dashboard/"
-      ]
     },
     "/$lang/_unauth/": {
       "filePath": "$lang/_unauth.index.tsx",
       "parent": "/$lang/_unauth"
     },
+    "/$lang/_auth/dashboard": {
+      "filePath": "$lang/_auth/(cms)/dashboard.tsx",
+      "parent": "/$lang/_auth",
+      "children": [
+        "/$lang/_auth/dashboard/comments",
+        "/$lang/_auth/dashboard/posts",
+        "/$lang/_auth/dashboard/temp",
+        "/$lang/_auth/dashboard/users",
+        "/$lang/_auth/dashboard/"
+      ]
+    },
+    "/$lang/_auth/dashboard/comments": {
+      "filePath": "$lang/_auth/(cms)/dashboard.comments.tsx",
+      "parent": "/$lang/_auth/dashboard"
+    },
+    "/$lang/_auth/dashboard/posts": {
+      "filePath": "$lang/_auth/(cms)/dashboard.posts.tsx",
+      "parent": "/$lang/_auth/dashboard"
+    },
+    "/$lang/_auth/dashboard/temp": {
+      "filePath": "$lang/_auth/(cms)/dashboard.temp.tsx",
+      "parent": "/$lang/_auth/dashboard"
+    },
+    "/$lang/_auth/dashboard/users": {
+      "filePath": "$lang/_auth/(cms)/dashboard.users.tsx",
+      "parent": "/$lang/_auth/dashboard"
+    },
     "/$lang/_auth/dashboard/invoices": {
-      "filePath": "$lang/_auth.dashboard_.invoices.tsx",
+      "filePath": "$lang/_auth/(invoice)/dashboard.invoices.tsx",
       "parent": "/$lang/_auth"
     },
     "/$lang/_auth/dashboard/": {
-      "filePath": "$lang/_auth.dashboard.index.tsx",
+      "filePath": "$lang/_auth/(cms)/dashboard.index.tsx",
       "parent": "/$lang/_auth/dashboard"
     },
     "/$lang/_auth/dashboard/invoices/$invoiceId": {
-      "filePath": "$lang/_auth.dashboard_.invoices_.$invoiceId.tsx",
+      "filePath": "$lang/_auth/(invoice)/dashboard.invoices_.$invoiceId.tsx",
       "parent": "/$lang/_auth"
     }
   }

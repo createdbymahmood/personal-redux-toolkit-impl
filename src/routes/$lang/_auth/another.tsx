@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-router";
 import { message } from "antd";
 import { memo } from "react";
-import { prefetchAuth } from "../../app/services/auth";
+import { prefetchAuth } from "../../../app/services/auth";
 import { z } from "zod";
 
 const defaultNoAccessFallbackRoute: Redirect = {

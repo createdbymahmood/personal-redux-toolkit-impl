@@ -11,9 +11,9 @@ export const Route = createRootRouteWithContext<RouteContext>()({
   beforeLoad({ context, ...props }) {
     if (!(props.params as { lang: string })?.lang) {
       throw redirect({
-        to: "/$lang/dashboard",
+        to: "/$lang/dashboard/comments",
         params: { lang: context.lang },
-        search: { categories: ["QueryString"], pageIndex: 0, enabled: true },
+        // search: { categories: ["QueryString"], pageIndex: 0, enabled: true },
       });
     }
   },
