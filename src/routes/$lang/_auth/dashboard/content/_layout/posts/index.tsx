@@ -8,7 +8,7 @@ export const Route = createFileRoute(
       Hello /$lang/_auth/dashboard/content/_layout/posts/!
       <Link
         to="/$lang/dashboard/content/posts/$postId"
-        params={{ postId: "ZXC" as unknown as number, lang: "en" }}
+        params={{ postId: 1, lang: "en" }}
       >
         Post Details
       </Link>

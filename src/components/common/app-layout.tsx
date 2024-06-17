@@ -56,7 +56,7 @@ const sidebarMenuItems: MenuItem[] = [
         key: "/dashboard",
         label: (
           <Link
-            to="/$lang/dashboard"
+            to="/$lang/dashboard/content"
             params={{ lang: "en" }}
             search={{ categories: ["Category"], enabled: true, pageIndex: 2 }}
           >
