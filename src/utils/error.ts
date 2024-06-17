@@ -6,23 +6,30 @@ import { get } from "lodash-es";
 const ROUTER_CODE = ["PARSE_PARAMS", "VALIDATE_SEARCH"] as const;
 
 type ErrorDescription = { title: string; description: string };
-const isRouterError = (error: unknown) => {
-  return z
-    .object({
-      routerCode: z.enum(ROUTER_CODE),
-    })
-    .parse(error);
-};
+
+// const isRouterError = (error: unknown) => {
+//   return z
+//     .object({
+//       routerCode: z.enum(ROUTER_CODE),
+//     })
+//     .parse(error);
+// };
 
 export const routerCodeMessagesMap: Record<RuoterCode, ErrorDescription> = {
   PARSE_PARAMS: {
     title: i18n.t("errors:PARSE_PARAMS.title"),
     description: i18n.t("errors:PARSE_PARAMS.description"),
   },
+
   VALIDATE_SEARCH: {
     title: i18n.t("errors:VALIDATE_SEARCH.title"),
     description: i18n.t("errors:VALIDATE_SEARCH.description"),
   },
+};
+
+const defaultErrorMessage = {
+  title: 500,
+  description: "Something went wrong",
 };
 
 export type RuoterCode = ArrayValues<typeof ROUTER_CODE>;
@@ -30,8 +37,7 @@ export type RuoterCode = ArrayValues<typeof ROUTER_CODE>;
 export const routerErrorToClientMessage = (error: unknown) => {
   return get(
     routerCodeMessagesMap,
-    (error as { routerCode: RuoterCode })?.routerCode
+    (error as { routerCode: RuoterCode })?.routerCode,
+    defaultErrorMessage
   );
 };
-
-const toClientErrorMessage = () => {};

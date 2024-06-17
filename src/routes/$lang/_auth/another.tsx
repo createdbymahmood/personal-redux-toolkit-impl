@@ -7,10 +7,9 @@ import {
 import { message } from "antd";
 import { memo } from "react";
 import { prefetchAuth } from "../../../app/services/auth";
-import { z } from "zod";
 
 const defaultNoAccessFallbackRoute: Redirect = {
-  to: "/$lang/dashboard",
+  to: "/$lang/dashboard/content",
   params: { lang: "en" },
   search: { categories: ["String"], enabled: true, pageIndex: 1 },
 };
@@ -31,7 +30,7 @@ const beforeLoad = (opts: BeforeLoadOptions) => {
 export const Route = createFileRoute("/$lang/_auth/another")({
   component: memo(Another),
   loader: ({ context: { dispatch } }) => prefetchAuth.session(dispatch),
-  beforeLoad,
+  // beforeLoad,
 });
 
 function Another() {
@@ -41,7 +40,7 @@ function Another() {
       {JSON.stringify(query, null, 2)}
 
       <Link
-        to="/$lang/dashboard"
+        to="/$lang/dashboard/content"
         params={{ lang: "fa" }}
         search={{ categories: ["Salam"], enabled: false, pageIndex: 1 }}
       >

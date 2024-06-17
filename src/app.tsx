@@ -40,7 +40,7 @@ export const router = createRouter({
     <Skeleton
       avatar
       paragraph={{ rows: 4 }}
-      style={{ margin: theme.useToken().token.marginLG }}
+      style={{ padding: theme.useToken().token.paddingLG }}
     />
   ),
 

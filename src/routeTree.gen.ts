@@ -17,18 +17,29 @@ import { Route as LangUnauthImport } from './routes/$lang/_unauth'
 import { Route as LangAuthImport } from './routes/$lang/_auth'
 import { Route as LangUnauthIndexImport } from './routes/$lang/_unauth.index'
 import { Route as LangAuthAnotherImport } from './routes/$lang/_auth/another'
-import { Route as LangAuthcmsDashboardImport } from './routes/$lang/_auth/(cms)/dashboard'
-import { Route as LangAuthcmsDashboardIndexImport } from './routes/$lang/_auth/(cms)/dashboard.index'
-import { Route as LangAuthinvoiceDashboardInvoicesImport } from './routes/$lang/_auth/(invoice)/dashboard.invoices'
-import { Route as LangAuthcmsDashboardUsersImport } from './routes/$lang/_auth/(cms)/dashboard.users'
-import { Route as LangAuthcmsDashboardTempImport } from './routes/$lang/_auth/(cms)/dashboard.temp'
-import { Route as LangAuthcmsDashboardPostsImport } from './routes/$lang/_auth/(cms)/dashboard.posts'
-import { Route as LangAuthcmsDashboardCommentsImport } from './routes/$lang/_auth/(cms)/dashboard.comments'
-import { Route as LangAuthinvoiceDashboardInvoicesInvoiceIdImport } from './routes/$lang/_auth/(invoice)/dashboard.invoices_.$invoiceId'
+import { Route as LangAuthDashboardInvoicesLayoutImport } from './routes/$lang/_auth/dashboard/invoices/_layout'
+import { Route as LangAuthDashboardContentLayoutImport } from './routes/$lang/_auth/dashboard/content/_layout'
+import { Route as LangAuthDashboardInvoicesLayoutIndexImport } from './routes/$lang/_auth/dashboard/invoices/_layout/index'
+import { Route as LangAuthDashboardContentLayoutIndexImport } from './routes/$lang/_auth/dashboard/content/_layout/index'
+import { Route as LangAuthDashboardContentLayoutUsersImport } from './routes/$lang/_auth/dashboard/content/_layout/users'
+import { Route as LangAuthDashboardContentLayoutCommentsImport } from './routes/$lang/_auth/dashboard/content/_layout/comments'
+import { Route as LangAuthDashboardContentLayoutPostsIndexImport } from './routes/$lang/_auth/dashboard/content/_layout/posts/index'
+import { Route as LangAuthDashboardInvoicesLayoutInvoiceIdImport } from './routes/$lang/_auth/dashboard/invoices/_layout/_.$invoiceId'
+import { Route as LangAuthDashboardContentLayoutPostsLayoutImport } from './routes/$lang/_auth/dashboard/content/_layout/posts/_layout'
+import { Route as LangAuthDashboardContentLayoutPostsLayoutPostIdImport } from './routes/$lang/_auth/dashboard/content/_layout/posts/_layout.$postId'
 
 // Create Virtual Routes
 
 const LangImport = createFileRoute('/$lang')()
+const LangAuthDashboardInvoicesImport = createFileRoute(
+  '/$lang/_auth/dashboard/invoices',
+)()
+const LangAuthDashboardContentImport = createFileRoute(
+  '/$lang/_auth/dashboard/content',
+)()
+const LangAuthDashboardContentLayoutPostsImport = createFileRoute(
+  '/$lang/_auth/dashboard/content/_layout/posts',
+)()
 
 // Create/Update Routes
 
@@ -57,47 +68,80 @@ const LangAuthAnotherRoute = LangAuthAnotherImport.update({
   getParentRoute: () => LangAuthRoute,
 } as any)
 
-const LangAuthcmsDashboardRoute = LangAuthcmsDashboardImport.update({
-  path: '/dashboard',
+const LangAuthDashboardInvoicesRoute = LangAuthDashboardInvoicesImport.update({
+  path: '/dashboard/invoices',
   getParentRoute: () => LangAuthRoute,
 } as any)
 
-const LangAuthcmsDashboardIndexRoute = LangAuthcmsDashboardIndexImport.update({
-  path: '/',
-  getParentRoute: () => LangAuthcmsDashboardRoute,
+const LangAuthDashboardContentRoute = LangAuthDashboardContentImport.update({
+  path: '/dashboard/content',
+  getParentRoute: () => LangAuthRoute,
 } as any)
 
-const LangAuthinvoiceDashboardInvoicesRoute =
-  LangAuthinvoiceDashboardInvoicesImport.update({
-    path: '/dashboard/invoices',
-    getParentRoute: () => LangAuthRoute,
+const LangAuthDashboardInvoicesLayoutRoute =
+  LangAuthDashboardInvoicesLayoutImport.update({
+    id: '/_layout',
+    getParentRoute: () => LangAuthDashboardInvoicesRoute,
   } as any)
 
-const LangAuthcmsDashboardUsersRoute = LangAuthcmsDashboardUsersImport.update({
-  path: '/users',
-  getParentRoute: () => LangAuthcmsDashboardRoute,
-} as any)
+const LangAuthDashboardContentLayoutRoute =
+  LangAuthDashboardContentLayoutImport.update({
+    id: '/_layout',
+    getParentRoute: () => LangAuthDashboardContentRoute,
+  } as any)
 
-const LangAuthcmsDashboardTempRoute = LangAuthcmsDashboardTempImport.update({
-  path: '/temp',
-  getParentRoute: () => LangAuthcmsDashboardRoute,
-} as any)
+const LangAuthDashboardContentLayoutPostsRoute =
+  LangAuthDashboardContentLayoutPostsImport.update({
+    path: '/posts',
+    getParentRoute: () => LangAuthDashboardContentLayoutRoute,
+  } as any)
 
-const LangAuthcmsDashboardPostsRoute = LangAuthcmsDashboardPostsImport.update({
-  path: '/posts',
-  getParentRoute: () => LangAuthcmsDashboardRoute,
-} as any)
+const LangAuthDashboardInvoicesLayoutIndexRoute =
+  LangAuthDashboardInvoicesLayoutIndexImport.update({
+    path: '/',
+    getParentRoute: () => LangAuthDashboardInvoicesLayoutRoute,
+  } as any)
 
-const LangAuthcmsDashboardCommentsRoute =
-  LangAuthcmsDashboardCommentsImport.update({
+const LangAuthDashboardContentLayoutIndexRoute =
+  LangAuthDashboardContentLayoutIndexImport.update({
+    path: '/',
+    getParentRoute: () => LangAuthDashboardContentLayoutRoute,
+  } as any)
+
+const LangAuthDashboardContentLayoutUsersRoute =
+  LangAuthDashboardContentLayoutUsersImport.update({
+    path: '/users',
+    getParentRoute: () => LangAuthDashboardContentLayoutRoute,
+  } as any)
+
+const LangAuthDashboardContentLayoutCommentsRoute =
+  LangAuthDashboardContentLayoutCommentsImport.update({
     path: '/comments',
-    getParentRoute: () => LangAuthcmsDashboardRoute,
+    getParentRoute: () => LangAuthDashboardContentLayoutRoute,
   } as any)
 
-const LangAuthinvoiceDashboardInvoicesInvoiceIdRoute =
-  LangAuthinvoiceDashboardInvoicesInvoiceIdImport.update({
-    path: '/dashboard/invoices/$invoiceId',
-    getParentRoute: () => LangAuthRoute,
+const LangAuthDashboardContentLayoutPostsIndexRoute =
+  LangAuthDashboardContentLayoutPostsIndexImport.update({
+    path: '/',
+    getParentRoute: () => LangAuthDashboardContentLayoutPostsRoute,
+  } as any)
+
+const LangAuthDashboardInvoicesLayoutInvoiceIdRoute =
+  LangAuthDashboardInvoicesLayoutInvoiceIdImport.update({
+    path: '/$invoiceId',
+    getParentRoute: () => LangAuthDashboardInvoicesLayoutRoute,
+  } as any)
+
+const LangAuthDashboardContentLayoutPostsLayoutRoute =
+  LangAuthDashboardContentLayoutPostsLayoutImport.update({
+    id: '/_layout',
+    getParentRoute: () => LangAuthDashboardContentLayoutPostsRoute,
+  } as any)
+
+const LangAuthDashboardContentLayoutPostsLayoutPostIdRoute =
+  LangAuthDashboardContentLayoutPostsLayoutPostIdImport.update({
+    path: '/$postId',
+    getParentRoute: () => LangAuthDashboardContentLayoutPostsLayoutRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -139,61 +183,96 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangUnauthIndexImport
       parentRoute: typeof LangUnauthImport
     }
-    '/$lang/_auth/(cms)/dashboard': {
-      id: '/$lang/_auth/dashboard'
-      path: '/dashboard'
-      fullPath: '/$lang/dashboard'
-      preLoaderRoute: typeof LangAuthcmsDashboardImport
+    '/$lang/_auth/dashboard/content': {
+      id: '/$lang/_auth/dashboard/content'
+      path: '/dashboard/content'
+      fullPath: '/$lang/dashboard/content'
+      preLoaderRoute: typeof LangAuthDashboardContentImport
       parentRoute: typeof LangAuthImport
     }
-    '/$lang/_auth/(cms)/dashboard/comments': {
-      id: '/$lang/_auth/dashboard/comments'
-      path: '/comments'
-      fullPath: '/$lang/dashboard/comments'
-      preLoaderRoute: typeof LangAuthcmsDashboardCommentsImport
-      parentRoute: typeof LangAuthcmsDashboardImport
+    '/$lang/_auth/dashboard/content/_layout': {
+      id: '/$lang/_auth/dashboard/content/_layout'
+      path: '/dashboard/content'
+      fullPath: '/$lang/dashboard/content'
+      preLoaderRoute: typeof LangAuthDashboardContentLayoutImport
+      parentRoute: typeof LangAuthDashboardContentRoute
     }
-    '/$lang/_auth/(cms)/dashboard/posts': {
-      id: '/$lang/_auth/dashboard/posts'
-      path: '/posts'
-      fullPath: '/$lang/dashboard/posts'
-      preLoaderRoute: typeof LangAuthcmsDashboardPostsImport
-      parentRoute: typeof LangAuthcmsDashboardImport
-    }
-    '/$lang/_auth/(cms)/dashboard/temp': {
-      id: '/$lang/_auth/dashboard/temp'
-      path: '/temp'
-      fullPath: '/$lang/dashboard/temp'
-      preLoaderRoute: typeof LangAuthcmsDashboardTempImport
-      parentRoute: typeof LangAuthcmsDashboardImport
-    }
-    '/$lang/_auth/(cms)/dashboard/users': {
-      id: '/$lang/_auth/dashboard/users'
-      path: '/users'
-      fullPath: '/$lang/dashboard/users'
-      preLoaderRoute: typeof LangAuthcmsDashboardUsersImport
-      parentRoute: typeof LangAuthcmsDashboardImport
-    }
-    '/$lang/_auth/(invoice)/dashboard/invoices': {
+    '/$lang/_auth/dashboard/invoices': {
       id: '/$lang/_auth/dashboard/invoices'
       path: '/dashboard/invoices'
       fullPath: '/$lang/dashboard/invoices'
-      preLoaderRoute: typeof LangAuthinvoiceDashboardInvoicesImport
+      preLoaderRoute: typeof LangAuthDashboardInvoicesImport
       parentRoute: typeof LangAuthImport
     }
-    '/$lang/_auth/(cms)/dashboard/': {
-      id: '/$lang/_auth/dashboard/'
+    '/$lang/_auth/dashboard/invoices/_layout': {
+      id: '/$lang/_auth/dashboard/invoices/_layout'
+      path: '/dashboard/invoices'
+      fullPath: '/$lang/dashboard/invoices'
+      preLoaderRoute: typeof LangAuthDashboardInvoicesLayoutImport
+      parentRoute: typeof LangAuthDashboardInvoicesRoute
+    }
+    '/$lang/_auth/dashboard/content/_layout/comments': {
+      id: '/$lang/_auth/dashboard/content/_layout/comments'
+      path: '/comments'
+      fullPath: '/$lang/dashboard/content/comments'
+      preLoaderRoute: typeof LangAuthDashboardContentLayoutCommentsImport
+      parentRoute: typeof LangAuthDashboardContentLayoutImport
+    }
+    '/$lang/_auth/dashboard/content/_layout/users': {
+      id: '/$lang/_auth/dashboard/content/_layout/users'
+      path: '/users'
+      fullPath: '/$lang/dashboard/content/users'
+      preLoaderRoute: typeof LangAuthDashboardContentLayoutUsersImport
+      parentRoute: typeof LangAuthDashboardContentLayoutImport
+    }
+    '/$lang/_auth/dashboard/content/_layout/': {
+      id: '/$lang/_auth/dashboard/content/_layout/'
       path: '/'
-      fullPath: '/$lang/dashboard/'
-      preLoaderRoute: typeof LangAuthcmsDashboardIndexImport
-      parentRoute: typeof LangAuthcmsDashboardImport
+      fullPath: '/$lang/dashboard/content/'
+      preLoaderRoute: typeof LangAuthDashboardContentLayoutIndexImport
+      parentRoute: typeof LangAuthDashboardContentLayoutImport
     }
-    '/$lang/_auth/(invoice)/dashboard/invoices/$invoiceId': {
-      id: '/$lang/_auth/dashboard/invoices/$invoiceId'
-      path: '/dashboard/invoices/$invoiceId'
+    '/$lang/_auth/dashboard/invoices/_layout/': {
+      id: '/$lang/_auth/dashboard/invoices/_layout/'
+      path: '/'
+      fullPath: '/$lang/dashboard/invoices/'
+      preLoaderRoute: typeof LangAuthDashboardInvoicesLayoutIndexImport
+      parentRoute: typeof LangAuthDashboardInvoicesLayoutImport
+    }
+    '/$lang/_auth/dashboard/content/_layout/posts': {
+      id: '/$lang/_auth/dashboard/content/_layout/posts'
+      path: '/posts'
+      fullPath: '/$lang/dashboard/content/posts'
+      preLoaderRoute: typeof LangAuthDashboardContentLayoutPostsImport
+      parentRoute: typeof LangAuthDashboardContentLayoutImport
+    }
+    '/$lang/_auth/dashboard/content/_layout/posts/_layout': {
+      id: '/$lang/_auth/dashboard/content/_layout/posts/_layout'
+      path: '/posts'
+      fullPath: '/$lang/dashboard/content/posts'
+      preLoaderRoute: typeof LangAuthDashboardContentLayoutPostsLayoutImport
+      parentRoute: typeof LangAuthDashboardContentLayoutPostsRoute
+    }
+    '/$lang/_auth/dashboard/invoices/_layout//$invoiceId': {
+      id: '/$lang/_auth/dashboard/invoices/_layout//$invoiceId'
+      path: '/$invoiceId'
       fullPath: '/$lang/dashboard/invoices/$invoiceId'
-      preLoaderRoute: typeof LangAuthinvoiceDashboardInvoicesInvoiceIdImport
-      parentRoute: typeof LangAuthImport
+      preLoaderRoute: typeof LangAuthDashboardInvoicesLayoutInvoiceIdImport
+      parentRoute: typeof LangAuthDashboardInvoicesLayoutImport
+    }
+    '/$lang/_auth/dashboard/content/_layout/posts/': {
+      id: '/$lang/_auth/dashboard/content/_layout/posts/'
+      path: '/'
+      fullPath: '/$lang/dashboard/content/posts/'
+      preLoaderRoute: typeof LangAuthDashboardContentLayoutPostsIndexImport
+      parentRoute: typeof LangAuthDashboardContentLayoutPostsImport
+    }
+    '/$lang/_auth/dashboard/content/_layout/posts/_layout/$postId': {
+      id: '/$lang/_auth/dashboard/content/_layout/posts/_layout/$postId'
+      path: '/$postId'
+      fullPath: '/$lang/dashboard/content/posts/$postId'
+      preLoaderRoute: typeof LangAuthDashboardContentLayoutPostsLayoutPostIdImport
+      parentRoute: typeof LangAuthDashboardContentLayoutPostsLayoutImport
     }
   }
 }
@@ -204,15 +283,30 @@ export const routeTree = rootRoute.addChildren({
   LangRoute: LangRoute.addChildren({
     LangAuthRoute: LangAuthRoute.addChildren({
       LangAuthAnotherRoute,
-      LangAuthcmsDashboardRoute: LangAuthcmsDashboardRoute.addChildren({
-        LangAuthcmsDashboardCommentsRoute,
-        LangAuthcmsDashboardPostsRoute,
-        LangAuthcmsDashboardTempRoute,
-        LangAuthcmsDashboardUsersRoute,
-        LangAuthcmsDashboardIndexRoute,
+      LangAuthDashboardContentRoute: LangAuthDashboardContentRoute.addChildren({
+        LangAuthDashboardContentLayoutRoute:
+          LangAuthDashboardContentLayoutRoute.addChildren({
+            LangAuthDashboardContentLayoutCommentsRoute,
+            LangAuthDashboardContentLayoutUsersRoute,
+            LangAuthDashboardContentLayoutIndexRoute,
+            LangAuthDashboardContentLayoutPostsRoute:
+              LangAuthDashboardContentLayoutPostsRoute.addChildren({
+                LangAuthDashboardContentLayoutPostsLayoutRoute:
+                  LangAuthDashboardContentLayoutPostsLayoutRoute.addChildren({
+                    LangAuthDashboardContentLayoutPostsLayoutPostIdRoute,
+                  }),
+                LangAuthDashboardContentLayoutPostsIndexRoute,
+              }),
+          }),
       }),
-      LangAuthinvoiceDashboardInvoicesRoute,
-      LangAuthinvoiceDashboardInvoicesInvoiceIdRoute,
+      LangAuthDashboardInvoicesRoute:
+        LangAuthDashboardInvoicesRoute.addChildren({
+          LangAuthDashboardInvoicesLayoutRoute:
+            LangAuthDashboardInvoicesLayoutRoute.addChildren({
+              LangAuthDashboardInvoicesLayoutIndexRoute,
+              LangAuthDashboardInvoicesLayoutInvoiceIdRoute,
+            }),
+        }),
     }),
     LangUnauthRoute: LangUnauthRoute.addChildren({ LangUnauthIndexRoute }),
   }),
@@ -241,9 +335,8 @@ export const routeTree = rootRoute.addChildren({
       "parent": "/$lang",
       "children": [
         "/$lang/_auth/another",
-        "/$lang/_auth/dashboard",
-        "/$lang/_auth/dashboard/invoices",
-        "/$lang/_auth/dashboard/invoices/$invoiceId"
+        "/$lang/_auth/dashboard/content",
+        "/$lang/_auth/dashboard/invoices"
       ]
     },
     "/$lang/_unauth": {
@@ -261,44 +354,80 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "$lang/_unauth.index.tsx",
       "parent": "/$lang/_unauth"
     },
-    "/$lang/_auth/dashboard": {
-      "filePath": "$lang/_auth/(cms)/dashboard.tsx",
+    "/$lang/_auth/dashboard/content": {
+      "filePath": "$lang/_auth/dashboard/content",
       "parent": "/$lang/_auth",
       "children": [
-        "/$lang/_auth/dashboard/comments",
-        "/$lang/_auth/dashboard/posts",
-        "/$lang/_auth/dashboard/temp",
-        "/$lang/_auth/dashboard/users",
-        "/$lang/_auth/dashboard/"
+        "/$lang/_auth/dashboard/content/_layout"
       ]
     },
-    "/$lang/_auth/dashboard/comments": {
-      "filePath": "$lang/_auth/(cms)/dashboard.comments.tsx",
-      "parent": "/$lang/_auth/dashboard"
-    },
-    "/$lang/_auth/dashboard/posts": {
-      "filePath": "$lang/_auth/(cms)/dashboard.posts.tsx",
-      "parent": "/$lang/_auth/dashboard"
-    },
-    "/$lang/_auth/dashboard/temp": {
-      "filePath": "$lang/_auth/(cms)/dashboard.temp.tsx",
-      "parent": "/$lang/_auth/dashboard"
-    },
-    "/$lang/_auth/dashboard/users": {
-      "filePath": "$lang/_auth/(cms)/dashboard.users.tsx",
-      "parent": "/$lang/_auth/dashboard"
+    "/$lang/_auth/dashboard/content/_layout": {
+      "filePath": "$lang/_auth/dashboard/content/_layout.tsx",
+      "parent": "/$lang/_auth/dashboard/content",
+      "children": [
+        "/$lang/_auth/dashboard/content/_layout/comments",
+        "/$lang/_auth/dashboard/content/_layout/users",
+        "/$lang/_auth/dashboard/content/_layout/",
+        "/$lang/_auth/dashboard/content/_layout/posts"
+      ]
     },
     "/$lang/_auth/dashboard/invoices": {
-      "filePath": "$lang/_auth/(invoice)/dashboard.invoices.tsx",
-      "parent": "/$lang/_auth"
+      "filePath": "$lang/_auth/dashboard/invoices",
+      "parent": "/$lang/_auth",
+      "children": [
+        "/$lang/_auth/dashboard/invoices/_layout"
+      ]
     },
-    "/$lang/_auth/dashboard/": {
-      "filePath": "$lang/_auth/(cms)/dashboard.index.tsx",
-      "parent": "/$lang/_auth/dashboard"
+    "/$lang/_auth/dashboard/invoices/_layout": {
+      "filePath": "$lang/_auth/dashboard/invoices/_layout.tsx",
+      "parent": "/$lang/_auth/dashboard/invoices",
+      "children": [
+        "/$lang/_auth/dashboard/invoices/_layout/",
+        "/$lang/_auth/dashboard/invoices/_layout//$invoiceId"
+      ]
     },
-    "/$lang/_auth/dashboard/invoices/$invoiceId": {
-      "filePath": "$lang/_auth/(invoice)/dashboard.invoices_.$invoiceId.tsx",
-      "parent": "/$lang/_auth"
+    "/$lang/_auth/dashboard/content/_layout/comments": {
+      "filePath": "$lang/_auth/dashboard/content/_layout/comments.tsx",
+      "parent": "/$lang/_auth/dashboard/content/_layout"
+    },
+    "/$lang/_auth/dashboard/content/_layout/users": {
+      "filePath": "$lang/_auth/dashboard/content/_layout/users.tsx",
+      "parent": "/$lang/_auth/dashboard/content/_layout"
+    },
+    "/$lang/_auth/dashboard/content/_layout/": {
+      "filePath": "$lang/_auth/dashboard/content/_layout/index.tsx",
+      "parent": "/$lang/_auth/dashboard/content/_layout"
+    },
+    "/$lang/_auth/dashboard/invoices/_layout/": {
+      "filePath": "$lang/_auth/dashboard/invoices/_layout/index.tsx",
+      "parent": "/$lang/_auth/dashboard/invoices/_layout"
+    },
+    "/$lang/_auth/dashboard/content/_layout/posts": {
+      "filePath": "$lang/_auth/dashboard/content/_layout/posts",
+      "parent": "/$lang/_auth/dashboard/content/_layout",
+      "children": [
+        "/$lang/_auth/dashboard/content/_layout/posts/_layout",
+        "/$lang/_auth/dashboard/content/_layout/posts/"
+      ]
+    },
+    "/$lang/_auth/dashboard/content/_layout/posts/_layout": {
+      "filePath": "$lang/_auth/dashboard/content/_layout/posts/_layout.tsx",
+      "parent": "/$lang/_auth/dashboard/content/_layout/posts",
+      "children": [
+        "/$lang/_auth/dashboard/content/_layout/posts/_layout/$postId"
+      ]
+    },
+    "/$lang/_auth/dashboard/invoices/_layout//$invoiceId": {
+      "filePath": "$lang/_auth/dashboard/invoices/_layout/_.$invoiceId.tsx",
+      "parent": "/$lang/_auth/dashboard/invoices/_layout"
+    },
+    "/$lang/_auth/dashboard/content/_layout/posts/": {
+      "filePath": "$lang/_auth/dashboard/content/_layout/posts/index.tsx",
+      "parent": "/$lang/_auth/dashboard/content/_layout/posts"
+    },
+    "/$lang/_auth/dashboard/content/_layout/posts/_layout/$postId": {
+      "filePath": "$lang/_auth/dashboard/content/_layout/posts/_layout.$postId.tsx",
+      "parent": "/$lang/_auth/dashboard/content/_layout/posts/_layout"
     }
   }
 }
