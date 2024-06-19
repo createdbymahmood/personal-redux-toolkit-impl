@@ -7,7 +7,7 @@ export const Route = createFileRoute("/$lang/_auth/dashboard/content/_layout/")(
       if (opts.cause === "preload") return;
       opts.navigate({
         to: "/$lang/dashboard/content/posts",
-        params: { lang: "en" },
+        params: p => ({ lang: p.lang as string }),
       });
     },
   }

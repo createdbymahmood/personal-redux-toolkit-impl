@@ -5,7 +5,12 @@ export const Route = createFileRoute(
 )({
   component: () => (
     <div>
-      <Link to="/$lang/dashboard/content/posts" params={{ lang: "en" }}>
+      <Link
+        to="/$lang/dashboard/content/posts"
+        params={p => ({
+          lang: p.lang as string,
+        })}
+      >
         <ArrowLeft />
       </Link>
 

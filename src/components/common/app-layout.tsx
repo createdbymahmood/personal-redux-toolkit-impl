@@ -18,6 +18,7 @@ import { get, noop } from "lodash-es";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 import { auth } from "../../app/services/auth";
+import { LanguageToggle } from "./language-toggle";
 type MenuItem = Required<MenuProps>["items"][number];
 
 function findKeyAndParent(
@@ -57,7 +58,7 @@ const sidebarMenuItems: MenuItem[] = [
         label: (
           <Link
             to="/$lang/dashboard/content"
-            params={{ lang: "en" }}
+            params={p => ({ lang: p.lang as string })}
             search={{ categories: ["Category"], enabled: true, pageIndex: 2 }}
           >
             Dashboard
@@ -67,7 +68,10 @@ const sidebarMenuItems: MenuItem[] = [
       {
         key: "/invoices",
         label: (
-          <Link to="/$lang/dashboard/invoices" params={{ lang: "en" }}>
+          <Link
+            to="/$lang/dashboard/invoices"
+            params={p => ({ lang: p.lang as string })}
+          >
             Invoices
           </Link>
         ),
@@ -77,7 +81,11 @@ const sidebarMenuItems: MenuItem[] = [
             label: (
               <Link
                 to="/$lang/dashboard/invoices/$invoiceId"
-                params={{ lang: "en", invoiceId: nanoid() }}
+                params={p => ({
+                  ...p,
+                  lang: p.lang as string,
+                  invoiceId: nanoid(),
+                })}
               >
                 InvoiceId
               </Link>
@@ -89,7 +97,7 @@ const sidebarMenuItems: MenuItem[] = [
       {
         key: "/another",
         label: (
-          <Link to="/$lang/another" params={{ lang: "en" }}>
+          <Link to="/$lang/another" params={p => ({ lang: p.lang as string })}>
             Another Page
           </Link>
         ),
@@ -206,6 +214,7 @@ export const AppLayout: React.FC<AppLayoutProps> = () => {
         >
           Logout
         </Button>
+        <LanguageToggle />
       </Layout.Sider>
 
       <Layout>

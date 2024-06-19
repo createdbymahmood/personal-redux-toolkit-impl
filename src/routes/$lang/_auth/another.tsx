@@ -1,16 +1,18 @@
 import {
   Link,
   Redirect,
+  Router,
   createFileRoute,
   redirect,
 } from "@tanstack/react-router";
 import { message } from "antd";
 import { memo } from "react";
 import { prefetchAuth } from "../../../app/services/auth";
+import { routeTree } from "../../../routeTree.gen";
 
 const defaultNoAccessFallbackRoute: Redirect = {
   to: "/$lang/dashboard/content",
-  params: { lang: "en" },
+  params: p => p,
   search: { categories: ["String"], enabled: true, pageIndex: 1 },
 };
 
@@ -41,7 +43,7 @@ function Another() {
 
       <Link
         to="/$lang/dashboard/content"
-        params={{ lang: "fa" }}
+        params={p => ({ lang: p.lang as string })}
         search={{ categories: ["Salam"], enabled: false, pageIndex: 1 }}
       >
         Salam

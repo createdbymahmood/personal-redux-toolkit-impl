@@ -3,7 +3,7 @@ import { AppLayout } from "../../components/common";
 import { memo } from "react";
 
 export const Route = createFileRoute("/$lang/_auth")({
-  component: AppLayout,
+  component: memo(AppLayout),
 
   beforeLoad({ context, ...props }) {
     if (!(props.params as { lang: string })?.lang || !context.isAuth) {

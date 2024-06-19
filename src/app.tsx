@@ -8,7 +8,7 @@ import { routeTree } from "./routeTree.gen";
 
 import { RouterProvider } from "@tanstack/react-router";
 import { Skeleton, Spin, theme } from "antd";
-import { I18nextProvider } from "react-i18next";
+import { I18nextProvider, useTranslation } from "react-i18next";
 import { auth } from "./app/services/auth";
 import {
   AppDispatch,
@@ -68,15 +68,14 @@ function InnerApp() {
   const dispatch = useAppDispatch();
   const isAuth = isAuthenticated && isInitialized;
   const refetchSession = auth.useRefetchSessionQuery();
-
+  const [t, { language }] = useTranslation();
   if (!isInitialized || refetchSession.isLoading) return null;
 
   return (
     <RouterProvider
       key={String(isAuth)}
       router={router}
-      defaultPreload="intent"
-      context={{ isAuth, dispatch, lang: "en" }}
+      context={{ isAuth, dispatch, lang: language }}
     />
   );
 }
