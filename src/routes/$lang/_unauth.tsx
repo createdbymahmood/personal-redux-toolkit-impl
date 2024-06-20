@@ -11,7 +11,7 @@ export const Route = createFileRoute("/$lang/_unauth")({
   beforeLoad({ context, search }) {
     if (context.isAuth)
       throw redirect({
-        to: search.redirect,
+        to: search.redirect ?? "/$lang/dashboard/content",
       });
   },
   shouldReload: true,

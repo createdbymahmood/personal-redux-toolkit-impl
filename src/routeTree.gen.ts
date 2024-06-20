@@ -15,7 +15,8 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as LangUnauthImport } from './routes/$lang/_unauth'
 import { Route as LangAuthImport } from './routes/$lang/_auth'
-import { Route as LangUnauthIndexImport } from './routes/$lang/_unauth.index'
+import { Route as LangUnauthIndexImport } from './routes/$lang/_unauth/index'
+import { Route as LangUnauthLoginImport } from './routes/$lang/_unauth/login'
 import { Route as LangAuthAnotherImport } from './routes/$lang/_auth/another'
 import { Route as LangAuthDashboardInvoicesLayoutImport } from './routes/$lang/_auth/dashboard/invoices/_layout'
 import { Route as LangAuthDashboardContentLayoutImport } from './routes/$lang/_auth/dashboard/content/_layout'
@@ -60,6 +61,11 @@ const LangAuthRoute = LangAuthImport.update({
 
 const LangUnauthIndexRoute = LangUnauthIndexImport.update({
   path: '/',
+  getParentRoute: () => LangUnauthRoute,
+} as any)
+
+const LangUnauthLoginRoute = LangUnauthLoginImport.update({
+  path: '/login',
   getParentRoute: () => LangUnauthRoute,
 } as any)
 
@@ -175,6 +181,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$lang/another'
       preLoaderRoute: typeof LangAuthAnotherImport
       parentRoute: typeof LangAuthImport
+    }
+    '/$lang/_unauth/login': {
+      id: '/$lang/_unauth/login'
+      path: '/login'
+      fullPath: '/$lang/login'
+      preLoaderRoute: typeof LangUnauthLoginImport
+      parentRoute: typeof LangUnauthImport
     }
     '/$lang/_unauth/': {
       id: '/$lang/_unauth/'
@@ -308,7 +321,10 @@ export const routeTree = rootRoute.addChildren({
             }),
         }),
     }),
-    LangUnauthRoute: LangUnauthRoute.addChildren({ LangUnauthIndexRoute }),
+    LangUnauthRoute: LangUnauthRoute.addChildren({
+      LangUnauthLoginRoute,
+      LangUnauthIndexRoute,
+    }),
   }),
 })
 
@@ -343,6 +359,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "$lang/_unauth.tsx",
       "parent": "/$lang",
       "children": [
+        "/$lang/_unauth/login",
         "/$lang/_unauth/"
       ]
     },
@@ -350,8 +367,12 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "$lang/_auth/another.tsx",
       "parent": "/$lang/_auth"
     },
+    "/$lang/_unauth/login": {
+      "filePath": "$lang/_unauth/login.tsx",
+      "parent": "/$lang/_unauth"
+    },
     "/$lang/_unauth/": {
-      "filePath": "$lang/_unauth.index.tsx",
+      "filePath": "$lang/_unauth/index.tsx",
       "parent": "/$lang/_unauth"
     },
     "/$lang/_auth/dashboard/content": {

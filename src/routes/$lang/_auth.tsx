@@ -8,7 +8,7 @@ export const Route = createFileRoute("/$lang/_auth")({
   beforeLoad({ context, ...props }) {
     if (!(props.params as { lang: string })?.lang || !context.isAuth) {
       throw redirect({
-        to: "/$lang",
+        to: "/$lang/login",
         params: { lang: context.lang },
         search: {
           redirect: props.location.href,

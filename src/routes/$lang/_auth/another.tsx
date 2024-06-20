@@ -32,7 +32,6 @@ const beforeLoad = (opts: BeforeLoadOptions) => {
 export const Route = createFileRoute("/$lang/_auth/another")({
   component: memo(Another),
   loader: ({ context: { dispatch } }) => prefetchAuth.session(dispatch),
-  // beforeLoad,
 });
 
 function Another() {
