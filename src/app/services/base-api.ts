@@ -83,7 +83,7 @@ const baseQueryWithRetry = retry(baseQueryWithReauth, { maxRetries: 0 });
  * in order to get the appropriate types,
  * and to ensure that the file injecting the endpoints is loaded
  */
-export const api = createApi({
+export const baseApi = createApi({
   /**
    * `reducerPath` is optional and will not be required by most users.
    * This is useful if you have multiple API definitions,
@@ -107,4 +107,5 @@ export const api = createApi({
    * If you want all endpoints defined in the same file, they could be included here instead
    */
   endpoints: () => ({}),
+  refetchOnMountOrArgChange: true,
 });

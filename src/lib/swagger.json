@@ -1,0 +1,3103 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Domestic API",
+    "description": "API documentation for the Domestic service.",
+    "version": "0.2.0"
+  },
+  "servers": [
+    {
+      "url": "127.0.0.1/api/v1"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Create a user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "password": "123456",
+                  "username": "test2"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all users",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "username": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Get user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "gender": {
+                          "type": "string"
+                        },
+                        "isEmailVerified": {
+                          "type": "boolean"
+                        },
+                        "isPhoneVerified": {
+                          "type": "boolean"
+                        },
+                        "id": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "lastName": {
+                          "type": "string"
+                        },
+                        "mobile": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "profileImage": {
+                          "type": "string",
+                          "nullable": true
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "source": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "type": "string"
+                        },
+                        "timestamp": {
+                          "type": "integer"
+                        },
+                        "requestId": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  },
+                  "example": {
+                    "data": {
+                      "username": "ali-alian",
+                      "role": "viewer",
+                      "active": true,
+                      "gender": "male",
+                      "isEmailVerified": false,
+                      "isPhoneVerified": false,
+                      "id": "_USERS_83c62ffe-54b4-4fc8-b11a-58b5a8224bdb",
+                      "email": "rest@gmail.com",
+                      "lastName": "alian",
+                      "mobile": "09365458899",
+                      "name": "ali",
+                      "profileImage": null
+                    },
+                    "meta": {
+                      "code": "successful",
+                      "message": "ok",
+                      "source": "domestic",
+                      "version": "0.2.0",
+                      "timestamp": 1716892734742,
+                      "requestId": "NONE"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "active": {
+                    "type": "boolean"
+                  }
+                },
+                "example": {
+                  "active": false
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/panel": {
+      "patch": {
+        "summary": "Update self",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "mobile": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string"
+                  },
+                  "gender": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "ali",
+                  "lastName": "alian",
+                  "mobile": "09365458899",
+                  "email": "rest@gmail.com",
+                  "username": "ali-alian",
+                  "gender": "male"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Profile updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Terminate self",
+        "responses": {
+          "200": {
+            "description": "Account terminated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/panel/image": {
+      "put": {
+        "summary": "Set profile image",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Profile image updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete profile image",
+        "responses": {
+          "200": {
+            "description": "Profile image deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "User login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "loginType": {
+                    "type": "string"
+                  },
+                  "identifier": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "loginType": "username",
+                  "identifier": "ali-alian",
+                  "password": "123456"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/signup": {
+      "post": {
+        "summary": "User registration",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "identifierType": {
+                    "type": "string"
+                  },
+                  "identifier": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "confirmPassword": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "identifierType": "username",
+                  "identifier": "test1",
+                  "password": "123456",
+                  "confirmPassword": "1234567"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registration successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/username": {
+      "post": {
+        "summary": "Check username validation",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "username": "test"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Registration successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/panel/password": {
+      "patch": {
+        "summary": "Update user password",
+        "operationId": "updateUserPassword",
+        "tags": ["Users"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "string",
+                    "example": "12345678"
+                  },
+                  "confirmPassword": {
+                    "type": "string",
+                    "example": "12345678"
+                  },
+                  "oldPassword": {
+                    "type": "string",
+                    "example": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJp3MDExNDgyfQ.mvqJzPXb5aAXA_O7wCw-XaPwFpMMnzSxBg4HRcGPmoc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Password updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "username": {
+                          "type": "string",
+                          "example": "test"
+                        },
+                        "role": {
+                          "type": "string",
+                          "example": "admin"
+                        },
+                        "name": {
+                          "type": "string",
+                          "example": "test"
+                        },
+                        "lastName": {
+                          "type": "string",
+                          "example": "test"
+                        },
+                        "mobile": {
+                          "type": "string",
+                          "example": "09xxxxxxxxxx"
+                        },
+                        "idNumber": {
+                          "type": "string",
+                          "example": "1"
+                        },
+                        "address": {
+                          "type": "string",
+                          "example": "mashhad"
+                        },
+                        "active": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "test@gmail.com"
+                        },
+                        "gender": {
+                          "type": "string",
+                          "example": "male"
+                        },
+                        "isEmailVerified": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "isPhoneVerified": {
+                          "type": "boolean",
+                          "example": false
+                        },
+                        "country": {
+                          "type": "integer",
+                          "example": 364
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "_USERS_xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "example": "successful"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "ok"
+                        },
+                        "source": {
+                          "type": "string",
+                          "example": "domestic"
+                        },
+                        "version": {
+                          "type": "string",
+                          "example": "0.2.0"
+                        },
+                        "timestamp": {
+                          "type": "integer",
+                          "example": 1716975494008
+                        },
+                        "requestId": {
+                          "type": "string",
+                          "example": "NONE"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/catalog/category/admin": {
+      "post": {
+        "summary": "Create a new category",
+        "tags": ["Admin"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCategory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-roleCheck": ["ADMIN", "SUPER_ADMIN"]
+      },
+      "get": {
+        "summary": "Get all categories",
+        "tags": ["Admin"],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all categories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-roleCheck": ["ADMIN", "SUPER_ADMIN"]
+      }
+    },
+    "/catalog/category/admin/{id}": {
+      "get": {
+        "summary": "Get a category by ID",
+        "tags": ["Admin"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-roleCheck": ["ADMIN", "SUPER_ADMIN"]
+      },
+      "patch": {
+        "summary": "Update a category",
+        "tags": ["Admin"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCategory"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-roleCheck": ["ADMIN", "SUPER_ADMIN"]
+      },
+      "delete": {
+        "summary": "Delete a category",
+        "tags": ["Admin"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted category"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-roleCheck": ["ADMIN", "SUPER_ADMIN"]
+      }
+    },
+    "/catalog/category": {
+      "get": {
+        "summary": "Get all categories (User)",
+        "tags": ["User"],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all categories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/catalog/category/{id}": {
+      "get": {
+        "summary": "Get a category by ID (User)",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/catalog/service/admin": {
+      "post": {
+        "summary": "Create a new service",
+        "tags": ["Admin"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateService"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Service"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-roleCheck": ["ADMIN", "SUPER_ADMIN"]
+      },
+      "get": {
+        "summary": "Get all services",
+        "tags": ["Admin"],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all services",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Service"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-roleCheck": ["ADMIN", "SUPER_ADMIN"]
+      }
+    },
+    "/catalog/service/admin/{id}": {
+      "get": {
+        "summary": "Get a service by ID",
+        "tags": ["Admin"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Service"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-roleCheck": ["ADMIN", "SUPER_ADMIN"]
+      },
+      "patch": {
+        "summary": "Update a service",
+        "tags": ["Admin"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateService"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully updated service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Service"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-roleCheck": ["ADMIN", "SUPER_ADMIN"]
+      },
+      "delete": {
+        "summary": "Delete a service",
+        "tags": ["Admin"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted service"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "x-roleCheck": ["ADMIN", "SUPER_ADMIN"]
+      }
+    },
+    "/catalog/service": {
+      "get": {
+        "summary": "Get all services (User)",
+        "tags": ["User"],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all services",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Service"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/catalog/service/{id}": {
+      "get": {
+        "summary": "Get a service by ID (User)",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved service",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Service"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/wallets": {
+      "get": {
+        "summary": "Get wallet by user",
+        "description": "Retrieve the wallet associated with the authenticated user.",
+        "operationId": "getWalletByUser",
+        "tags": ["Wallet"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Wallet"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/wallets/users/{userId}": {
+      "get": {
+        "summary": "Get wallet by admin",
+        "description": "Retrieve the wallet associated with a specific user by an admin.",
+        "operationId": "getWalletByAdmin",
+        "tags": ["Wallet"],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the user."
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Wallet"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Change wallet status by admin",
+        "description": "Change the status of a wallet for a specific user by an admin.",
+        "operationId": "changeWalletStatusByAdmin",
+        "tags": ["Wallet"],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the user."
+          }
+        ],
+        "requestBody": {
+          "description": "Wallet status change request",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "enum": ["active", "inactive", "suspended"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Wallet"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/wallets/users": {
+      "get": {
+        "summary": "Get all wallets by admin",
+        "description": "Retrieve all wallets with optional filters by an admin.",
+        "operationId": "getAllWalletsByAdmin",
+        "tags": ["Wallet"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Page number for pagination."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Number of records per page."
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["active", "inactive", "suspended"]
+            },
+            "description": "Filter by wallet status."
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["1", "-1"]
+            },
+            "description": "Sort order (1 for ascending, -1 for descending)."
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["createdAt", "userId", "updatedAt", "status"]
+            },
+            "description": "Field to sort by."
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Wallet"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/transactions/users/{userId}/{id}": {
+      "get": {
+        "summary": "Get user transaction by admin",
+        "description": "Retrieve a specific transaction for a user by an admin.",
+        "operationId": "getUserTransactionByAdmin",
+        "tags": ["Transaction"],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the user."
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the transaction."
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/transactions/users/{userId}": {
+      "get": {
+        "summary": "Get user transactions by admin",
+        "description": "Retrieve all transactions for a user by an admin.",
+        "operationId": "getUserTransactionsByAdmin",
+        "tags": ["Transaction"],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the user."
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Page number for pagination."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Number of records per page."
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["1", "-1"]
+            },
+            "description": "Sort order (1 for ascending, -1 for descending)."
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "createdAt",
+                "walletId",
+                "updatedAt",
+                "type",
+                "currency",
+                "createdBy",
+                "date",
+                "amount"
+              ]
+            },
+            "description": "Field to sort by."
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "deposit",
+                "withdrawal",
+                "incoming-transfer",
+                "outgoing-transfer",
+                "purchase",
+                "unfreeze"
+              ]
+            },
+            "description": "Filter by transaction type."
+          },
+          {
+            "name": "currency",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["IRT", "USD", "EUR", "GBP"]
+            },
+            "description": "Filter by currency."
+          },
+          {
+            "name": "walletId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by wallet ID."
+          },
+          {
+            "name": "createdBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by creator ID."
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Transaction"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/transactions/admin/{id}": {
+      "get": {
+        "summary": "Get transaction by admin",
+        "description": "Retrieve a specific transaction by an admin.",
+        "operationId": "getTransactionByAdmin",
+        "tags": ["Transaction"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the transaction."
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/transactions/admin": {
+      "get": {
+        "summary": "Get transactions by admin",
+        "description": "Retrieve all transactions by an admin.",
+        "operationId": "getTransactionsByAdmin",
+        "tags": ["Transaction"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Page number for pagination."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Number of records per page."
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["1", "-1"]
+            },
+            "description": "Sort order (1 for ascending, -1 for descending)."
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "createdAt",
+                "walletId",
+                "updatedAt",
+                "type",
+                "currency",
+                "createdBy",
+                "date",
+                "amount"
+              ]
+            },
+            "description": "Field to sort by."
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "deposit",
+                "withdrawal",
+                "incoming-transfer",
+                "outgoing-transfer",
+                "purchase",
+                "unfreeze"
+              ]
+            },
+            "description": "Filter by transaction type."
+          },
+          {
+            "name": "currency",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["IRT", "USD", "EUR", "GBP"]
+            },
+            "description": "Filter by currency."
+          },
+          {
+            "name": "walletId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by wallet ID."
+          },
+          {
+            "name": "createdBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by creator ID."
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Transaction"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/transactions/{id}": {
+      "get": {
+        "summary": "Get transaction by user",
+        "description": "Retrieve a specific transaction by the authenticated user.",
+        "operationId": "getTransactionByUser",
+        "tags": ["Transaction"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the transaction."
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "get": {
+        "summary": "Get transactions by user",
+        "description": "Retrieve all transactions by the authenticated user.",
+        "operationId": "getTransactionsByUser",
+        "tags": ["Transaction"],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Page number for pagination."
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Number of records per page."
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["1", "-1"]
+            },
+            "description": "Sort order (1 for ascending, -1 for descending)."
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "createdAt",
+                "walletId",
+                "updatedAt",
+                "type",
+                "currency",
+                "createdBy",
+                "date",
+                "amount"
+              ]
+            },
+            "description": "Field to sort by."
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "deposit",
+                "withdrawal",
+                "incoming-transfer",
+                "outgoing-transfer",
+                "purchase",
+                "unfreeze"
+              ]
+            },
+            "description": "Filter by transaction type."
+          },
+          {
+            "name": "currency",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["IRT", "USD", "EUR", "GBP"]
+            },
+            "description": "Filter by currency."
+          },
+          {
+            "name": "walletId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by wallet ID."
+          },
+          {
+            "name": "createdBy",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter by creator ID."
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Transaction"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a transaction",
+        "description": "Creates a new transaction with the given details.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "example": 250
+                  },
+                  "currency": {
+                    "type": "string",
+                    "example": "USD"
+                  },
+                  "targetUser": {
+                    "type": "string",
+                    "example": "_USERS_dc394a78-1ab2-4022-8aad-d1777c953291"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "targetWallet": {
+                          "type": "string",
+                          "example": "_WALLETS_86b1d2c6-58e8-4e9a-ab0e-6e801996718fs"
+                        },
+                        "targetUser": {
+                          "type": "string",
+                          "example": "_USERS_dc394a78-1ab2-4022-8aad-d1777c953291"
+                        },
+                        "outGoingTransaction": {
+                          "type": "object",
+                          "properties": {
+                            "walletId": {
+                              "type": "string",
+                              "example": "_WALLETS_86b1d2c6-58e8-4e9a-ab0e-6e801996718f"
+                            },
+                            "type": {
+                              "type": "string",
+                              "example": "outgoing-transfer"
+                            },
+                            "currency": {
+                              "type": "string",
+                              "example": "USD"
+                            },
+                            "amount": {
+                              "type": "number",
+                              "example": 250
+                            },
+                            "description": {
+                              "type": "string",
+                              "example": "Transfer funds to wallet:_WALLETS_86b1d2c6-58e8-4e9a-ab0e-6e801996718fs user:_USERS_dc394a78-1ab2-4022-8aad-d1777c953291"
+                            },
+                            "createdBy": {
+                              "type": "string",
+                              "example": "_USERS_42c07122-2e55-48c4-9052-4618fd783d0d"
+                            },
+                            "date": {
+                              "type": "string",
+                              "format": "date-time",
+                              "example": "2024-06-12T13:34:26.128Z"
+                            },
+                            "outgoingTransferDetails": {
+                              "type": "object",
+                              "properties": {
+                                "toWalletId": {
+                                  "type": "string",
+                                  "example": "_WALLETS_86b1d2c6-58e8-4e9a-ab0e-6e801996718fs"
+                                }
+                              }
+                            },
+                            "_id": {
+                              "type": "string",
+                              "example": "6669a3e259e9cfeae1e0ce3e"
+                            },
+                            "createdAt": {
+                              "type": "string",
+                              "format": "date-time",
+                              "example": "2024-06-12T13:34:26.136Z"
+                            },
+                            "updatedAt": {
+                              "type": "string",
+                              "format": "date-time",
+                              "example": "2024-06-12T13:34:26.136Z"
+                            },
+                            "id": {
+                              "type": "string",
+                              "example": "_TRANSACTIONS_ed861c8e-b6bd-45bd-9994-0e4a6a9fbe42"
+                            },
+                            "__v": {
+                              "type": "integer",
+                              "example": 0
+                            }
+                          }
+                        },
+                        "incomingTransaction": {
+                          "type": "string",
+                          "example": "_TRANSACTIONS_24795d76-1f40-4d78-8607-f582153c0d16"
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "example": "successful"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "ok"
+                        },
+                        "source": {
+                          "type": "string",
+                          "example": "domestic"
+                        },
+                        "version": {
+                          "type": "string",
+                          "example": "0.8.0"
+                        },
+                        "timestamp": {
+                          "type": "integer",
+                          "example": 1718199266153
+                        },
+                        "requestId": {
+                          "type": "string",
+                          "example": "NONE"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/transactions/super-admin": {
+      "post": {
+        "summary": "Create a transaction as super-admin",
+        "description": "Creates a new transaction as a super-admin with the given details.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "example": 25000
+                  },
+                  "currency": {
+                    "type": "string",
+                    "example": "IRT"
+                  },
+                  "targetUser": {
+                    "type": "string",
+                    "example": "_USERS_42c07122-2e55-48c4-9052-4618fd783d0d"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "testing tooman"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "walletId": {
+                          "type": "string",
+                          "example": "_WALLETS_86b1d2c6-58e8-4e9a-ab0e-6e801996718f"
+                        },
+                        "type": {
+                          "type": "string",
+                          "example": "deposit"
+                        },
+                        "currency": {
+                          "type": "string",
+                          "example": "IRT"
+                        },
+                        "amount": {
+                          "type": "number",
+                          "example": 25000
+                        },
+                        "description": {
+                          "type": "string",
+                          "example": "testing tooman"
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "example": "_USERS_42c07122-2e55-48c4-9052-4618fd783d0d"
+                        },
+                        "date": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-12T13:53:09.192Z"
+                        },
+                        "depositDetails": {
+                          "type": "object",
+                          "properties": {
+                            "bankName": {
+                              "type": "string",
+                              "example": null
+                            },
+                            "accountNumber": {
+                              "type": "string",
+                              "example": null
+                            },
+                            "depositBy": {
+                              "type": "string",
+                              "example": "_USERS_42c07122-2e55-48c4-9052-4618fd783d0d"
+                            }
+                          }
+                        },
+                        "_id": {
+                          "type": "string",
+                          "example": "6669a8451f83fbca141a3801"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-12T13:53:09.195Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "example": "2024-06-12T13:53:09.195Z"
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "_TRANSACTIONS_ab014ce1-5669-4242-8349-fcc212a84206"
+                        },
+                        "__v": {
+                          "type": "integer",
+                          "example": 0
+                        }
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "example": "successful"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "ok"
+                        },
+                        "source": {
+                          "type": "string",
+                          "example": "domestic"
+                        },
+                        "version": {
+                          "type": "string",
+                          "example": "0.8.0"
+                        },
+                        "timestamp": {
+                          "type": "integer",
+                          "example": 1718200389203
+                        },
+                        "requestId": {
+                          "type": "string",
+                          "example": "NONE"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/ticket-management/tickets/admin": {
+      "post": {
+        "summary": "Create a new ticket",
+        "operationId": "createTicket",
+        "tags": ["admin"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateTicket" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket created successfully"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all tickets",
+        "operationId": "getAllTickets",
+        "tags": ["admin"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" },
+          { "$ref": "#/components/parameters/SortBy" },
+          { "$ref": "#/components/parameters/SortOrder" },
+          { "$ref": "#/components/parameters/Status" }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of tickets"
+          }
+        }
+      }
+    },
+    "/ticket-management/tickets/admin/{id}": {
+      "get": {
+        "summary": "Get ticket by ID",
+        "operationId": "getTicketById",
+        "tags": ["admin"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Id" }],
+        "responses": {
+          "200": {
+            "description": "Ticket details"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a ticket",
+        "operationId": "updateTicket",
+        "tags": ["admin"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Id" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateTicket" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a ticket",
+        "operationId": "deleteTicket",
+        "tags": ["admin"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Id" }],
+        "responses": {
+          "200": {
+            "description": "Ticket deleted successfully"
+          }
+        }
+      }
+    },
+    "/ticket-management/tickets/admin/{id}/chat": {
+      "post": {
+        "summary": "Send message to ticket chat",
+        "operationId": "sendMessageToChat",
+        "tags": ["admin"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Id" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SendMessageToChat" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Message sent successfully"
+          }
+        }
+      }
+    },
+    "/ticket-management/tickets/admin/{id}/assign": {
+      "put": {
+        "summary": "Assign ticket",
+        "operationId": "assignTicket",
+        "tags": ["admin"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Id" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AssignTicket" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket assigned successfully"
+          }
+        }
+      }
+    },
+    "/ticket-management/tickets/admin/{id}/assignToSelf": {
+      "put": {
+        "summary": "Assign ticket to self",
+        "operationId": "assignTicketToSelf",
+        "tags": ["admin"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Id" }],
+        "responses": {
+          "200": {
+            "description": "Ticket assigned to self successfully"
+          }
+        }
+      }
+    },
+    "/ticket-management/tickets": {
+      "post": {
+        "summary": "Create a new ticket by user",
+        "operationId": "createTicketByUser",
+        "tags": ["customer"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateTicketByUser" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket created successfully"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all tickets by user",
+        "operationId": "getAllTicketsByUser",
+        "tags": ["customer"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "$ref": "#/components/parameters/Page" },
+          { "$ref": "#/components/parameters/Limit" },
+          { "$ref": "#/components/parameters/SortBy" },
+          { "$ref": "#/components/parameters/SortOrder" },
+          { "$ref": "#/components/parameters/Status" }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of tickets"
+          }
+        }
+      }
+    },
+    "/ticket-management/tickets/{id}": {
+      "get": {
+        "summary": "Get ticket by ID by user",
+        "operationId": "getTicketByIdByUser",
+        "tags": ["customer"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Id" }],
+        "responses": {
+          "200": {
+            "description": "Ticket details"
+          }
+        }
+      }
+    },
+    "/ticket-management/tickets/{id}/chat": {
+      "post": {
+        "summary": "Send message to ticket chat by user",
+        "operationId": "sendMessageToChatByUser",
+        "tags": ["customer"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "$ref": "#/components/parameters/Id" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMessageToChatByUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Message sent successfully"
+          }
+        }
+      }
+    },
+    "/finance/purchases": {
+      "put": {
+        "summary": "Update purchase",
+        "operationId": "updatePurchase",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "purchaseId": {
+                    "type": "string",
+                    "description": "The ID of the purchase"
+                  }
+                },
+                "required": ["purchaseId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Purchase updated successfully"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a new purchase",
+        "operationId": "createPurchase",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "serviceId": {
+                    "type": "string",
+                    "description": "The ID of the service"
+                  },
+                  "duration": {
+                    "type": "integer",
+                    "description": "Duration of the service"
+                  }
+                },
+                "required": ["serviceId", "duration"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Purchase created successfully"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CreateCategory": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "object",
+            "properties": {
+              "fa": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "es": {
+                "type": "string"
+              },
+              "pr": {
+                "type": "string"
+              },
+              "ar": {
+                "type": "string"
+              }
+            },
+            "required": ["en"]
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string"
+          },
+          "iconCode": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          },
+          "deletedBy": {
+            "type": "string"
+          }
+        },
+        "required": ["name"]
+      },
+      "UpdateCategory": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "object",
+            "properties": {
+              "fa": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "es": {
+                "type": "string"
+              },
+              "pr": {
+                "type": "string"
+              },
+              "ar": {
+                "type": "string"
+              }
+            }
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string"
+          },
+          "iconCode": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          },
+          "deletedBy": {
+            "type": "string"
+          }
+        }
+      },
+      "Category": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "object",
+            "properties": {
+              "fa": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "es": {
+                "type": "string"
+              },
+              "pr": {
+                "type": "string"
+              },
+              "ar": {
+                "type": "string"
+              }
+            }
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string"
+          },
+          "iconCode": {
+            "type": "string"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          },
+          "deletedBy": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateService": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "object",
+            "properties": {
+              "fa": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "es": {
+                "type": "string"
+              },
+              "pr": {
+                "type": "string"
+              },
+              "ar": {
+                "type": "string"
+              }
+            },
+            "required": ["en"],
+            "additionalProperties": false
+          },
+          "description": {
+            "type": "string"
+          },
+          "iconCode": {
+            "type": "string"
+          },
+          "price": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "currency": {
+                "type": "string",
+                "enum": ["IRT", "USD", "EUR", "GBP"]
+              }
+            },
+            "required": ["value", "currency"]
+          },
+          "category": {
+            "type": "string"
+          },
+          "discounts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "months": {
+                  "type": "number"
+                },
+                "percentage": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "handleType": {
+            "type": "string",
+            "enum": ["file", "coupon", "service"]
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "isDeleted": {
+            "type": "boolean"
+          }
+        },
+        "required": ["name", "price", "category", "handleType"]
+      },
+      "UpdateService": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "object",
+            "properties": {
+              "fa": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "es": {
+                "type": "string"
+              },
+              "pr": {
+                "type": "string"
+              },
+              "ar": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "description": {
+            "type": "string"
+          },
+          "iconCode": {
+            "type": "string"
+          },
+          "price": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "currency": {
+                "type": "string",
+                "enum": ["IRT", "USD", "EUR", "GBP"]
+              }
+            }
+          },
+          "category": {
+            "type": "string"
+          },
+          "discounts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "months": {
+                  "type": "number"
+                },
+                "percentage": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "handleType": {
+            "type": "string",
+            "enum": ["TYPE1", "TYPE2", "TYPE3"]
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "isDeleted": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Service": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "object",
+            "properties": {
+              "fa": {
+                "type": "string"
+              },
+              "en": {
+                "type": "string"
+              },
+              "es": {
+                "type": "string"
+              },
+              "pr": {
+                "type": "string"
+              },
+              "ar": {
+                "type": "string"
+              }
+            }
+          },
+          "description": {
+            "type": "string"
+          },
+          "iconCode": {
+            "type": "string"
+          },
+          "price": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "currency": {
+                "type": "string",
+                "enum": ["IRT", "USD", "EUR", "GBP"]
+              }
+            }
+          },
+          "category": {
+            "type": "string"
+          },
+          "discounts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "months": {
+                  "type": "number"
+                },
+                "percentage": {
+                  "type": "number"
+                }
+              }
+            }
+          },
+          "handleType": {
+            "type": "string",
+            "enum": ["file", "coupon", "service"]
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "isDeleted": {
+            "type": "boolean"
+          },
+          "createdBy": {
+            "type": "string"
+          },
+          "updatedBy": {
+            "type": "string"
+          },
+          "deletedBy": {
+            "type": "string"
+          }
+        }
+      },
+      "Wallet": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "balance": {
+            "type": "number"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["active", "inactive", "suspended"]
+          }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "walletId": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "deposit",
+              "withdrawal",
+              "incoming-transfer",
+              "outgoing-transfer",
+              "purchase",
+              "unfreeze"
+            ]
+          },
+          "amount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string",
+            "enum": ["IRT", "USD", "EUR", "GBP"]
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CreateTicket": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "assignedTo": {
+            "type": "string"
+          },
+          "customerId": {
+            "type": "string"
+          }
+        },
+        "required": ["title"]
+      },
+      "UpdateTicket": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "assignedTo": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["OPEN", "IN_PROGRESS", "CLOSED"]
+          }
+        }
+      },
+      "AssignTicket": {
+        "type": "object",
+        "properties": {
+          "assigneeId": {
+            "type": "string"
+          }
+        },
+        "required": ["assigneeId"]
+      },
+      "SendMessageToChat": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateTicketByUser": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        },
+        "required": ["title"]
+      },
+      "SendMessageToChatByUser": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Access token is missing or invalid",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "ForbiddenError": {
+        "description": "You do not have permission to access this resource",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "Id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Page": {
+        "name": "page",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "Limit": {
+        "name": "limit",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "SortBy": {
+        "name": "sortBy",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "SortOrder": {
+        "name": "sortOrder",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "enum": ["-1", "1"]
+        }
+      },
+      "Status": {
+        "name": "status",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "enum": ["OPEN", "IN_PROGRESS", "CLOSED"]
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

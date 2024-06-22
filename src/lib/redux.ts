@@ -3,7 +3,7 @@ import { RootState } from "../app/store";
 export function providesList<
   R extends { id: string | number }[],
   T extends string
->(resultsWithIds: R | undefined, tagType: T) {
+>({ resultsWithIds, tagType }: { resultsWithIds: R | undefined; tagType: T }) {
   return resultsWithIds
     ? [
         { type: tagType, id: "LIST" },

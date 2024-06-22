@@ -133,4 +133,5 @@ const generateJalaliConfig: GenerateConfig<Dayjs> = {
     },
   },
 };
+
 export const DatePicker = generatePicker<Dayjs>(generateJalaliConfig);

@@ -1,5 +1,4 @@
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Flex, Layout, Menu, Typography } from "antd";
 import { createStyles, useTheme } from "antd-style";
 import React, { useMemo, useState } from "react";
 
@@ -13,12 +12,20 @@ import {
   useRouterState,
 } from "@tanstack/react-router";
 import { useUpdateEffect } from "ahooks";
-import type { MenuProps } from "antd";
 import { get, noop } from "lodash-es";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import { auth } from "../../app/services/auth";
 import { LanguageToggle } from "./language-toggle";
+import { auth } from "src/app/services/auth";
+import {
+  MenuProps,
+  Flex,
+  Typography,
+  Button,
+  Menu,
+  Layout,
+} from "src/components/ui";
+
 type MenuItem = Required<MenuProps>["items"][number];
 
 function findKeyAndParent(

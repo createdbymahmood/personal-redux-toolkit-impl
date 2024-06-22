@@ -3,6 +3,7 @@ import { includes, some, startsWith } from "lodash-es";
 import { defineConfig } from "vite";
 import viteCompression from "vite-plugin-compression";
 import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 const vendors = ["react", "react-dom", "antd"];
 
@@ -15,7 +16,7 @@ const getManualChunks = (id: string) => {
 };
 
 const viteConfig = defineConfig({
-  plugins: [react(), viteCompression(), TanStackRouterVite()],
+  plugins: [react(), viteCompression(), TanStackRouterVite(), tsconfigPaths()],
   server: {
     port: 9900,
   },

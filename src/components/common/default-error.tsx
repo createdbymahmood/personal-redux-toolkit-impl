@@ -1,8 +1,9 @@
 import { ErrorRouteComponent, useRouter } from "@tanstack/react-router";
-import { Button, Result } from "antd";
 import { useCallback } from "react";
-import { routerErrorToClientMessage } from "../../utils/error";
+import { routerErrorToClientMessage } from "src/utils/error";
 import { ZodError, z } from "zod";
+import Result from "lodash-es/result";
+import { Button } from "src/components/ui";
 
 const isValidtionError = (value: unknown) => value instanceof ZodError;
 

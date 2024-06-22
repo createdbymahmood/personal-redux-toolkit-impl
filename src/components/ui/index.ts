@@ -1,5 +1,6 @@
 import { Input } from "./input";
 import { Slider } from "./slider";
 import { DatePicker } from "./date-picker";
-export { Input, Slider, DatePicker };
+import { Select } from "./select";
+export { Input, Slider, DatePicker, Select };
 export * from "antd";

@@ -5,10 +5,10 @@ import {
   createFileRoute,
   redirect,
 } from "@tanstack/react-router";
-import { message } from "antd";
 import { memo } from "react";
 import { prefetchAuth } from "../../../app/services/auth";
 import { routeTree } from "../../../routeTree.gen";
+import { message } from "src/components/ui";
 
 const defaultNoAccessFallbackRoute: Redirect = {
   to: "/$lang/dashboard/content",

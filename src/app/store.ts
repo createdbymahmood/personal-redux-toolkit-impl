@@ -2,8 +2,8 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import authReducer from "../features/auth/auth-slice";
-import { api } from "./services/api";
+import authReducer from "src/features/auth/auth-slice";
+import { baseApi } from "./services/base-api";
 import { listenerMiddleware } from "./listenerMiddleware";
 
 const authPersistConfig = {
@@ -13,7 +13,7 @@ const authPersistConfig = {
 };
 
 const rootReducer = combineReducers({
-  [api.reducerPath]: api.reducer,
+  [baseApi.reducerPath]: baseApi.reducer,
   auth: persistReducer(authPersistConfig, authReducer),
 });
 
@@ -25,7 +25,7 @@ export const createStore = () =>
         immutableCheck: false,
         serializableCheck: false,
       })
-        .concat(api.middleware)
+        .concat(baseApi.middleware)
         .prepend(listenerMiddleware.middleware),
   });
 

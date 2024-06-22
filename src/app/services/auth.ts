@@ -1,7 +1,7 @@
 import { retry } from "@reduxjs/toolkit/query/react";
-import { api } from "./api";
+import { baseApi } from "./base-api";
 import { AppDispatch } from "../store";
-import { message } from "antd";
+import { message } from "src/components/ui";
 
 export interface Post {
   id: number;
@@ -16,7 +16,7 @@ export interface User {
   phone: string;
 }
 
-export const auth = api
+export const auth = baseApi
   .injectEndpoints({
     endpoints: build => ({
       login: build.mutation<{ token: string; user: User }, unknown>({

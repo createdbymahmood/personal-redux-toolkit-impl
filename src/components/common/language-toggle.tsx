@@ -1,7 +1,7 @@
 import { useNavigate } from "@tanstack/react-router";
-import { Button } from "antd";
 import { useTranslation } from "react-i18next";
 import i18n from "../../lib/i18next/i18next-config";
+import { Button } from "src/components/ui";
 
 export const LanguageToggle = () => {
   const [t, { changeLanguage, language }] = useTranslation();

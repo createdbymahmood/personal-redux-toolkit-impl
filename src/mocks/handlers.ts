@@ -68,7 +68,7 @@ export const handlers = [
     const headers = req.headers.all();
 
     if (headers.authentication) {
-      return res(ctx.json({ token, user }));
+      return res(ctx.json({ token, user }), ctx.delay(2000));
     }
     return res(ctx.status(403), ctx.json({ error: "invalid credentials" }));
   }),

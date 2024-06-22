@@ -7,7 +7,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import { routeTree } from "./routeTree.gen";
 
 import { RouterProvider } from "@tanstack/react-router";
-import { Skeleton, Spin, theme } from "antd";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import { auth } from "./app/services/auth";
 import {
@@ -26,6 +25,7 @@ import {
 import { authSelectors } from "./features/auth";
 import "./global.css";
 import i18n from "./lib/i18next/i18next-config";
+import { Skeleton, Spin, theme } from "src/components/ui";
 
 export type RouteContext = {
   dispatch: AppDispatch;
@@ -69,7 +69,7 @@ function InnerApp() {
   const isAuth = isAuthenticated && isInitialized;
   const refetchSession = auth.useRefetchSessionQuery();
   const [t, { language }] = useTranslation();
-  if (!isInitialized || refetchSession.isLoading) return null;
+  if (!isInitialized || refetchSession.isLoading) return <Spin />;
 
   return (
     <RouterProvider

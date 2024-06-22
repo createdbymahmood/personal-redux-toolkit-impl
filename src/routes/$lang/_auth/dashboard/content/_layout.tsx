@@ -4,11 +4,11 @@ import {
   useLocation,
   useNavigate,
 } from "@tanstack/react-router";
-import { Card, Tabs } from "antd";
 import { TabsProps } from "antd/lib";
 import { find } from "lodash-es";
 import { memo, useMemo, useTransition } from "react";
 import { useTranslation } from "react-i18next";
+import { Card, Tabs } from "src/components/ui";
 
 export const Route = createFileRoute("/$lang/_auth/dashboard/content/_layout")({
   component: memo(() => {

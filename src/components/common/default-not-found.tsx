@@ -1,4 +1,4 @@
-import { Result } from "antd";
+import { Result } from "src/components/ui";
 
 export const DefaultNotFound: React.FC = () => {
   return (
